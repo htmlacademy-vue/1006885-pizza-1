@@ -1,0 +1,22 @@
+export const values = {
+  dough: ["light", "large"],
+  ingredients: [
+    "mushrooms",
+    "cheddar",
+    "salami",
+    "ham",
+    "ananas",
+    "bacon",
+    "onion",
+    "chile",
+    "jalapeno",
+    "olives",
+    "tomatoes",
+    "salmon",
+    "mozzarella",
+    "parmesan",
+    "blue_cheese",
+  ],
+  sauces: ["tomato", "creamy"],
+  sizes: ["small", "normal", "big"],
+};
