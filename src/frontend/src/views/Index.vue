@@ -12,14 +12,15 @@
               <label
                 v-for="doughItem in pizza.dough"
                 :key="doughItem.id"
-                class="dough__input dough__input--light"
+                class="dough__input"
+                :class="`dough__input--${getValue('dough', doughItem.id)}`"
               >
                 <input
                   type="radio"
                   name="dough"
-                  value="light"
+                  :value="getValue('dough', doughItem.id)"
                   class="visually-hidden"
-                  checked
+                  :checked="doughItem.id === 1"
                 />
                 <b>{{ doughItem.name }}</b>
                 <span>{{ doughItem.description }}</span>
@@ -34,13 +35,15 @@
               <label
                 v-for="size in pizza.sizes"
                 :key="size.id"
-                class="diameter__input diameter__input--small"
+                class="diameter__input"
+                :class="`diameter__input--${getValue('sizes', size.id)}`"
               >
                 <input
                   type="radio"
                   name="diameter"
-                  value="small"
+                  :value="getValue('sizes', size.id)"
                   class="visually-hidden"
+                  :checked="size.id === 1"
                 />
                 <span>{{ size.name }}</span>
               </label>
@@ -63,7 +66,12 @@
                   :key="sauce.id"
                   class="radio ingredients__input"
                 >
-                  <input type="radio" name="sauce" value="tomato" checked />
+                  <input
+                    type="radio"
+                    name="sauce"
+                    :value="getValue('sauces', sauce.id)"
+                    :checked="sauce.id === 1"
+                  />
                   <span>{{ sauce.name }}</span>
                 </label>
               </div>
@@ -77,9 +85,15 @@
                     :key="ingredient.id"
                     class="ingredients__item"
                   >
-                    <span class="filling filling--mushrooms">{{
-                      ingredient.name
-                    }}</span>
+                    <span
+                      class="filling"
+                      :class="`filling--${getValue(
+                        'ingredients',
+                        ingredient.id
+                      )}`"
+                    >
+                      {{ ingredient.name }}
+                    </span>
 
                     <div class="counter counter--orange ingredients__counter">
                       <button
@@ -140,6 +154,7 @@
 </template>
 
 <script>
+import { values } from "../common/values";
 import pizza from "@/static/pizza.json";
 
 export default {
@@ -148,6 +163,11 @@ export default {
     return {
       pizza,
     };
+  },
+  methods: {
+    getValue(key, id) {
+      return values[key][id - 1];
+    },
   },
 };
 </script>
