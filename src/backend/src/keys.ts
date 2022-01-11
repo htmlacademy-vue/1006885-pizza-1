@@ -34,7 +34,7 @@ export namespace UserServiceBindings {
 }
 
 /**
- * Constant values used when generating refresh token.
+ * Constant pizza_values used when generating refresh token.
  */
 export namespace RefreshTokenConstants {
   /**

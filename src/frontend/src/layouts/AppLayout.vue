@@ -1,9 +1,7 @@
 <template>
   <div id="app-layout">
     <AppLayoutHeader />
-    <main class="content">
-      <AppIndex />
-    </main>
+    <AppIndex :pizza="pizza" />
   </div>
 </template>
 
@@ -17,9 +15,11 @@ export default {
     AppIndex,
     AppLayoutHeader,
   },
+  props: {
+    pizza: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/assets/scss/layout/layout";
-</style>

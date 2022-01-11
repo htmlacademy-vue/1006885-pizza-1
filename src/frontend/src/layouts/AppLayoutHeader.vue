@@ -24,7 +24,3 @@ export default {
   name: "AppLayoutHeader",
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/assets/scss/layout/header.scss";
-</style>
