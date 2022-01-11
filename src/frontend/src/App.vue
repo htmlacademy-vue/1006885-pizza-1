@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import pizza from "@/static/pizza.json";
 import AppLayout from "./layouts/AppLayout";
+import pizza from "@/static/pizza.json";
+import { updatePizza } from "@/common/helpers";
 
 export default {
   name: "App",
@@ -17,6 +18,9 @@ export default {
     return {
       pizza,
     };
+  },
+  beforeMount() {
+    updatePizza(this.pizza);
   },
 };
 </script>

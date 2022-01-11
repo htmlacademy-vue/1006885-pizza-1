@@ -4,7 +4,10 @@
       <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
 
       <div class="sheet__content ingredients">
-        <AppBuilderSauceSelector :sauces="sauces" />
+        <AppBuilderSauceSelector
+          :sauces="sauces"
+          @onRadioChange="$emit('onRadioChange', $event)"
+        />
         <div class="ingredients__filling">
           <p>Начинка:</p>
 
@@ -17,7 +20,12 @@
               <span class="filling" :class="`filling--${ingredient.value}`">
                 {{ ingredient.name }}
               </span>
-              <AppItemCounter />
+              <AppItemCounter
+                :item="ingredient"
+                @getTotalIngredientsPrice="
+                  $emit('getTotalIngredientsPrice', $event)
+                "
+              />
             </li>
           </ul>
         </div>
@@ -27,8 +35,6 @@
 </template>
 
 <script>
-import { PIZZA_KEYS } from "@/common/constants";
-import { updatePizzaData } from "@/common/helpers";
 import AppBuilderSauceSelector from "@/modules/builder/components/BuilderSauceSelector";
 import AppItemCounter from "@/common/components/ItemCounter";
 
@@ -44,9 +50,6 @@ export default {
       type: Array,
       required: true,
     },
-  },
-  beforeMount() {
-    updatePizzaData(PIZZA_KEYS.ingredients, this.ingredients);
   },
 };
 </script>

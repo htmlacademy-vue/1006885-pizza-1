@@ -1,14 +1,7 @@
-export const PIZZA_KEYS = {
-  dough: "dough",
-  ingredients: "ingredients",
-  sauces: "sauces",
-  sizes: "sizes",
-};
-
 export const PIZZA_VALUES = {
   dough: {
     values: ["light", "large"],
-    inputName: "dought",
+    inputName: "dough",
     labelClassNames: ["dough__input"],
   },
   sauces: {
@@ -40,5 +33,6 @@ export const PIZZA_VALUES = {
       "blue_cheese",
     ],
     inputName: null,
+    labelClassNames: null,
   },
 };
