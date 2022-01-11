@@ -4,7 +4,7 @@
       <h2 class="title title--small sheet__title">Выберите размер</h2>
       <div class="sheet__content diameter">
         <label
-          v-for="size in updatedSizes"
+          v-for="size in sizes"
           :key="size.id"
           class="diameter__input"
           :class="`diameter__input--${size.value}`"
@@ -35,10 +35,8 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      updatedSizes: updatePizzaData(PIZZA_KEYS.sizes, this.sizes),
-    };
+  beforeMount() {
+    updatePizzaData(PIZZA_KEYS.sizes, this.sizes);
   },
 };
 </script>

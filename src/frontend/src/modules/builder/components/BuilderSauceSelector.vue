@@ -1,9 +1,8 @@
 <template>
   <div class="ingredients__sauce">
     <p>Основной соус:</p>
-
     <label
-      v-for="sauce in updatedSauces"
+      v-for="sauce in sauces"
       :key="sauce.id"
       class="radio ingredients__input"
     >
@@ -30,10 +29,8 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      updatedSauces: updatePizzaData(PIZZA_KEYS.sauces, this.sauces),
-    };
+  beforeMount() {
+    updatePizzaData(PIZZA_KEYS.sauces, this.sauces);
   },
 };
 </script>

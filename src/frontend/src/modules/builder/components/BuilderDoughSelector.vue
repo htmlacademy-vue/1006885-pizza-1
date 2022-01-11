@@ -4,7 +4,7 @@
       <h2 class="title title--small sheet__title">Выберите тесто</h2>
       <div class="sheet__content dough">
         <label
-          v-for="item in updatedDough"
+          v-for="item in dough"
           :key="item.id"
           class="dough__input"
           :class="`dough__input--${item.value}`"
@@ -36,10 +36,8 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      updatedDough: updatePizzaData(PIZZA_KEYS.dough, this.dough),
-    };
+  beforeMount() {
+    updatePizzaData(PIZZA_KEYS.dough, this.dough);
   },
 };
 </script>

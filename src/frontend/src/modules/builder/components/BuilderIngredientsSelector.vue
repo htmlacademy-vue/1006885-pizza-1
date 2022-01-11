@@ -10,7 +10,7 @@
 
           <ul class="ingredients__list">
             <li
-              v-for="ingredient in updatedIngredients"
+              v-for="ingredient in ingredients"
               :key="ingredient.id"
               class="ingredients__item"
             >
@@ -45,13 +45,8 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      updatedIngredients: updatePizzaData(
-        PIZZA_KEYS.ingredients,
-        this.ingredients
-      ),
-    };
+  beforeMount() {
+    updatePizzaData(PIZZA_KEYS.ingredients, this.ingredients);
   },
 };
 </script>
