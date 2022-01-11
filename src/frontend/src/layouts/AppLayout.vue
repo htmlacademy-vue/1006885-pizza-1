@@ -1,13 +1,21 @@
 <template>
-  <AppIndex />
+  <div id="app-layout">
+    <AppLayoutHeader />
+    <main class="content">
+      <AppIndex />
+    </main>
+  </div>
 </template>
 
 <script>
+import AppLayoutHeader from "@/layouts/AppLayoutHeader";
 import AppIndex from "@/views/Index";
+
 export default {
   name: "AppLayout",
   components: {
     AppIndex,
+    AppLayoutHeader,
   },
 };
 </script>
