@@ -4,6 +4,7 @@ export const updatePizzaData = (key, arr) => {
   arr.forEach((el, index) => {
     el.value = PIZZA_VALUES[key].values[index];
     el.inputName = PIZZA_VALUES[key].inputName;
+    el.labelClassNames = PIZZA_VALUES[key].labelClassNames;
   });
   return arr;
 };

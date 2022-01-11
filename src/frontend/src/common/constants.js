@@ -9,20 +9,17 @@ export const PIZZA_VALUES = {
   dough: {
     values: ["light", "large"],
     inputName: "dought",
-    // wrapperClassNames: ["sheet__content", "dough"],
-    // labelClassNames: ["dough__input", "dough__input--"],
+    labelClassNames: ["dough__input"],
   },
   sauces: {
     values: ["tomato", "creamy"],
     inputName: "sauce",
-    // wrapperClassNames: ["ingredients__sauce"],
-    // labelClassNames: ["radio", "ingredients__input"],
+    labelClassNames: ["radio", "ingredients__input"],
   },
   sizes: {
     values: ["small", "normal", "big"],
     inputName: "diameter",
-    // wrapperClassNames: ["sheet__content", "diameter"],
-    // labelClassNames: ["diameter__input", "diameter__input--"],
+    labelClassNames: ["diameter__input"],
   },
   ingredients: {
     values: [

@@ -3,21 +3,7 @@
     <div class="sheet">
       <h2 class="title title--small sheet__title">Выберите размер</h2>
       <div class="sheet__content diameter">
-        <label
-          v-for="size in sizes"
-          :key="size.id"
-          class="diameter__input"
-          :class="`diameter__input--${size.value}`"
-        >
-          <input
-            type="radio"
-            name="diameter"
-            :value="size.value"
-            class="visually-hidden"
-            :checked="size.id === 1"
-          />
-          <span>{{ size.name }}</span>
-        </label>
+        <AppRadioButton v-for="item in sizes" :key="item.id" :item="item" />
       </div>
     </div>
   </div>
@@ -26,9 +12,11 @@
 <script>
 import { PIZZA_KEYS } from "@/common/constants";
 import { updatePizzaData } from "@/common/helpers";
+import AppRadioButton from "@/common/components/RadioButton";
 
 export default {
   name: "AppBuilderSizeSelector",
+  components: { AppRadioButton },
   props: {
     sizes: {
       type: Array,
