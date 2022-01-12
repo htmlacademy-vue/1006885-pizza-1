@@ -15,6 +15,7 @@
           @onRadioChange="onRadioChange"
         />
         <AppBuilderPizzaView
+          :chosenIngredients="chosenIngredients"
           :totalPrice="totalPrice"
           :pizzaViewClassName="pizzaViewClassName"
         />
@@ -51,9 +52,15 @@ export default {
       sauces: this.pizza.sauces,
       totalPrice: 0,
       pizzaViewClassName: "pizza--foundation--light-tomato",
+      chosenIngredients: [],
     };
   },
   methods: {
+    getChosenIngredients() {
+      this.chosenIngredients = this.ingredients.filter(
+        (item) => item.quantity > 0
+      );
+    },
     changePizzaViewClassName() {
       const checkedSauce = this.getCheckedItem(this.sauces);
       const checkedDough = this.getCheckedItem(this.dough);
@@ -79,6 +86,7 @@ export default {
     onChangeIngredientCount() {
       this.calculateTotalPrice();
       this.changePizzaViewClassName();
+      this.getChosenIngredients();
     },
     onRadioChange(item) {
       let key;

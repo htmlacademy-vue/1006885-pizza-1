@@ -12,9 +12,11 @@
     <div class="content__constructor">
       <div class="pizza" :class="pizzaViewClassName">
         <div class="pizza__wrapper">
-          <div class="pizza__filling pizza__filling--ananas"></div>
-          <div class="pizza__filling pizza__filling--bacon"></div>
-          <div class="pizza__filling pizza__filling--cheddar"></div>
+          <AppPizzaIngredientView
+            v-for="ingredient in chosenIngredients"
+            :key="ingredient.id"
+            :className="ingredient.value"
+          />
         </div>
       </div>
     </div>
@@ -24,9 +26,10 @@
 
 <script>
 import AppBuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
+import AppPizzaIngredientView from "@/modules/builder/components/PizzaIngredientView";
 export default {
   name: "AppBuilderPizzaView",
-  components: { AppBuilderPriceCounter },
+  components: { AppPizzaIngredientView, AppBuilderPriceCounter },
   props: {
     totalPrice: {
       type: Number,
@@ -34,6 +37,10 @@ export default {
     },
     pizzaViewClassName: {
       type: String,
+      required: true,
+    },
+    chosenIngredients: {
+      type: Array,
       required: true,
     },
   },
