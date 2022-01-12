@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <AppBuilderPriceCounter />
+    <AppBuilderPriceCounter :totalPrice="totalPrice" />
   </div>
 </template>
 
@@ -27,6 +27,12 @@ import AppBuilderPriceCounter from "@/modules/builder/components/BuilderPriceCou
 export default {
   name: "AppBuilderPizzaView",
   components: { AppBuilderPriceCounter },
+  props: {
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+  },
 };
 </script>
 

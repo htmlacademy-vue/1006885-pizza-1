@@ -6,7 +6,7 @@
       :value="item.value"
       class="visually-hidden"
       :checked="item.checked"
-      @change="onChange($event)"
+      @change="onChange"
     />
     <template v-if="item.inputName === 'dough'">
       <b>{{ item.name }}</b>
@@ -37,14 +37,8 @@ export default {
     },
   },
   methods: {
-    onChange($event) {
-      // let value;
-      // if ("price" in currentItem) {
-      //   value = currentItem.price;
-      // } else {
-      //   value = currentItem.multiplier;
-      // }
-      this.$emit("onRadioChange", $event);
+    onChange() {
+      this.$emit("onRadioChange", this.item);
     },
   },
 };

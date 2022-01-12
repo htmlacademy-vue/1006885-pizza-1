@@ -11,10 +11,10 @@
         <AppBuilderIngredientsSelector
           :ingredients="ingredients"
           :sauces="sauces"
-          @getTotalIngredientsPrice="getTotalIngredientsPrice"
+          @onChangeIngredientCount="onChangeIngredientCount"
           @onRadioChange="onRadioChange"
         />
-        <AppBuilderPizzaView />
+        <AppBuilderPizzaView :totalPrice="totalPrice" />
       </div>
     </form>
   </main>
@@ -50,20 +50,39 @@ export default {
     };
   },
   methods: {
-    calculateTotalPrice() {
-      console.log();
+    getPrice(arr) {
+      return arr.find((el) => el.checked).price;
     },
-    getTotalIngredientsPrice() {
-      const price = this.ingredients.reduce((acc, item) => {
+    calculateTotalPrice() {
+      const ingredientsPrice = this.ingredients.reduce((acc, item) => {
         acc += item.price * item.quantity;
         return acc;
       }, 0);
-      console.log("INGREDIENTS_TOTAL", price);
-      // this.totalPrice += price;
-      console.log("TOTAL_TOTAL_PRICE", this.totalPrice);
+      const doughPrice = this.getPrice(this.dough);
+      const saucePrice = this.getPrice(this.sauces);
+      const sizeMultiplier = this.sizes.find((el) => el.checked).multiplier;
+      this.totalPrice =
+        (ingredientsPrice + doughPrice + saucePrice) * sizeMultiplier;
     },
-    onRadioChange($event) {
-      console.log("111", $event.target);
+    onChangeIngredientCount() {
+      this.calculateTotalPrice();
+    },
+    onRadioChange(item) {
+      let key;
+      switch (item.inputName) {
+        case "dough":
+          key = "dough";
+          break;
+        case "sauce":
+          key = "sauces";
+          break;
+        case "diameter":
+          key = "sizes";
+          break;
+      }
+      this.pizza[key].forEach((el) => (el.checked = false));
+      item.checked = true;
+      this.calculateTotalPrice();
     },
   },
 };

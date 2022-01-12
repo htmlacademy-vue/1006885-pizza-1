@@ -42,7 +42,7 @@ export default {
     onClick(isInc) {
       this.count = isInc ? this.count + 1 : this.count - 1;
       this.item.quantity = this.count;
-      this.$emit("getTotalIngredientsPrice");
+      this.$emit("onChangeIngredientCount");
     },
   },
 };

@@ -22,8 +22,8 @@
               </span>
               <AppItemCounter
                 :item="ingredient"
-                @getTotalIngredientsPrice="
-                  $emit('getTotalIngredientsPrice', $event)
+                @onChangeIngredientCount="
+                  $emit('onChangeIngredientCount', $event)
                 "
               />
             </li>
