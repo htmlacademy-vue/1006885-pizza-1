@@ -10,7 +10,7 @@
     </label>
 
     <div class="content__constructor">
-      <div class="pizza pizza--foundation--small-tomato">
+      <div class="pizza" :class="pizzaViewClassName">
         <div class="pizza__wrapper">
           <div class="pizza__filling pizza__filling--ananas"></div>
           <div class="pizza__filling pizza__filling--bacon"></div>
@@ -30,6 +30,10 @@ export default {
   props: {
     totalPrice: {
       type: Number,
+      required: true,
+    },
+    pizzaViewClassName: {
+      type: String,
       required: true,
     },
   },

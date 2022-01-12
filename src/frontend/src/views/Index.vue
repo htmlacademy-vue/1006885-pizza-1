@@ -14,7 +14,10 @@
           @onChangeIngredientCount="onChangeIngredientCount"
           @onRadioChange="onRadioChange"
         />
-        <AppBuilderPizzaView :totalPrice="totalPrice" />
+        <AppBuilderPizzaView
+          :totalPrice="totalPrice"
+          :pizzaViewClassName="pizzaViewClassName"
+        />
       </div>
     </form>
   </main>
@@ -47,25 +50,35 @@ export default {
       ingredients: this.pizza.ingredients,
       sauces: this.pizza.sauces,
       totalPrice: 0,
+      pizzaViewClassName: "pizza--foundation--light-tomato",
     };
   },
   methods: {
-    getPrice(arr) {
-      return arr.find((el) => el.checked).price;
+    changePizzaViewClassName() {
+      const checkedSauce = this.getCheckedItem(this.sauces);
+      const checkedDough = this.getCheckedItem(this.dough);
+
+      this.pizzaViewClassName = `pizza--foundation--${checkedDough.value}-${checkedSauce.value}`;
+    },
+    getCheckedItem(arr) {
+      return arr.find((el) => el.checked);
     },
     calculateTotalPrice() {
       const ingredientsPrice = this.ingredients.reduce((acc, item) => {
         acc += item.price * item.quantity;
         return acc;
       }, 0);
-      const doughPrice = this.getPrice(this.dough);
-      const saucePrice = this.getPrice(this.sauces);
-      const sizeMultiplier = this.sizes.find((el) => el.checked).multiplier;
+      const checkedDough = this.getCheckedItem(this.dough);
+      const checkedSauce = this.getCheckedItem(this.sauces);
+      const checkedSize = this.getCheckedItem(this.sizes);
+
       this.totalPrice =
-        (ingredientsPrice + doughPrice + saucePrice) * sizeMultiplier;
+        (ingredientsPrice + checkedDough.price + checkedSauce.price) *
+        checkedSize.multiplier;
     },
     onChangeIngredientCount() {
       this.calculateTotalPrice();
+      this.changePizzaViewClassName();
     },
     onRadioChange(item) {
       let key;
@@ -83,6 +96,7 @@ export default {
       this.pizza[key].forEach((el) => (el.checked = false));
       item.checked = true;
       this.calculateTotalPrice();
+      this.changePizzaViewClassName();
     },
   },
 };
