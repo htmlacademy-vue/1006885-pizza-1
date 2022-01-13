@@ -12,21 +12,14 @@
           <p>Начинка:</p>
 
           <ul class="ingredients__list">
-            <li
+            <AppIngredientItem
               v-for="ingredient in ingredients"
               :key="ingredient.id"
-              class="ingredients__item"
-            >
-              <span class="filling" :class="`filling--${ingredient.value}`">
-                {{ ingredient.name }}
-              </span>
-              <AppItemCounter
-                :item="ingredient"
-                @onChangeIngredientCount="
-                  $emit('onChangeIngredientCount', $event)
-                "
-              />
-            </li>
+              :ingredient="ingredient"
+              @onChangeIngredientCount="
+                $emit('onChangeIngredientCount', $event)
+              "
+            />
           </ul>
         </div>
       </div>
@@ -36,11 +29,11 @@
 
 <script>
 import AppBuilderSauceSelector from "@/modules/builder/components/BuilderSauceSelector";
-import AppItemCounter from "@/common/components/ItemCounter";
+import AppIngredientItem from "@/modules/builder/components/IngredientItem";
 
 export default {
   name: "AppBuilderIngredientsSelector",
-  components: { AppItemCounter, AppBuilderSauceSelector },
+  components: { AppIngredientItem, AppBuilderSauceSelector },
   props: {
     ingredients: {
       type: Array,

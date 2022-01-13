@@ -9,7 +9,13 @@
       />
     </label>
 
-    <div class="content__constructor">
+    <div
+      class="content__constructor"
+      id="DROP"
+      @drop="onDrop"
+      @dragover.prevent
+      @dragenter.prevent
+    >
       <div class="pizza" :class="pizzaViewClassName">
         <div class="pizza__wrapper">
           <AppPizzaIngredientView
@@ -39,9 +45,23 @@ export default {
       type: String,
       required: true,
     },
+    ingredients: {
+      type: Array,
+      required: true,
+    },
     chosenIngredients: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    onDrop(evt) {
+      const ingredientID = +evt.dataTransfer.getData("ingredientID");
+      const currentIngredient = this.ingredients.find(
+        (item) => item.id === ingredientID
+      );
+      console.log(currentIngredient);
+      currentIngredient.quantity++;
     },
   },
 };

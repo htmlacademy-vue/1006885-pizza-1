@@ -15,6 +15,7 @@
           @onRadioChange="onRadioChange"
         />
         <AppBuilderPizzaView
+          :ingredients="ingredients"
           :chosenIngredients="chosenIngredients"
           :totalPrice="totalPrice"
           :pizzaViewClassName="pizzaViewClassName"
