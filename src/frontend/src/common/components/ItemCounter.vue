@@ -3,16 +3,22 @@
     <button
       type="button"
       class="counter__button counter__button--minus"
-      :disabled="disabled"
-      @click="onClick(false)"
+      :disabled="disabledDecreaseButton"
+      @click="decrease"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
-    <input type="text" name="counter" class="counter__input" :value="count" />
+    <input
+      type="text"
+      name="counter"
+      class="counter__input"
+      :value="this.item.quantity"
+    />
     <button
       type="button"
       class="counter__button counter__button--plus"
-      @click="onClick(true)"
+      @click="increase"
+      :disabled="disabledIncreaseButton"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -28,21 +34,26 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      count: 0,
-    };
-  },
   computed: {
-    disabled() {
-      return this.count === 0;
+    disabledDecreaseButton() {
+      return this.item.quantity <= 0;
+    },
+    disabledIncreaseButton() {
+      return this.item.quantity >= 3;
     },
   },
   methods: {
-    onClick(isInc) {
-      this.count = isInc ? this.count + 1 : this.count - 1;
-      this.item.quantity = this.count;
-      this.$emit("onChangeIngredientCount");
+    increase() {
+      this.$emit("onChangeIngredientCount", {
+        ingredient: this.item,
+        quantity: this.item.quantity + 1,
+      });
+    },
+    decrease() {
+      this.$emit("onChangeIngredientCount", {
+        ingredient: this.item,
+        quantity: this.item.quantity - 1,
+      });
     },
   },
 };

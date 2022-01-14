@@ -11,17 +11,16 @@
 
     <div
       class="content__constructor"
-      id="DROP"
       @drop="onDrop"
       @dragover.prevent
       @dragenter.prevent
     >
-      <div class="pizza" :class="pizzaViewClassName">
+      <div class="pizza" :class="pizzaElementClassName">
         <div class="pizza__wrapper">
           <AppPizzaIngredientView
             v-for="ingredient in chosenIngredients"
             :key="ingredient.id"
-            :className="ingredient.value"
+            :ingredient="ingredient"
           />
         </div>
       </div>
@@ -41,10 +40,6 @@ export default {
       type: Number,
       required: true,
     },
-    pizzaViewClassName: {
-      type: String,
-      required: true,
-    },
     ingredients: {
       type: Array,
       required: true,
@@ -53,15 +48,24 @@ export default {
       type: Array,
       required: true,
     },
+    chosenSauce: {
+      type: Object,
+      required: true,
+    },
+    chosenDough: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    pizzaElementClassName() {
+      return `pizza--foundation--${this.chosenDough.value}-${this.chosenSauce.value}`;
+    },
   },
   methods: {
     onDrop(evt) {
       const ingredientID = +evt.dataTransfer.getData("ingredientID");
-      const currentIngredient = this.ingredients.find(
-        (item) => item.id === ingredientID
-      );
-      console.log(currentIngredient);
-      currentIngredient.quantity++;
+      this.$emit("onIngredientDrop", ingredientID);
     },
   },
 };

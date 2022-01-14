@@ -1,10 +1,9 @@
 <template>
   <li
-    id="DRAG"
     class="ingredients__item"
     :ingredient="ingredient"
-    draggable="true"
-    @dragstart="startDrag($event, ingredient)"
+    :draggable="draggable"
+    @dragstart="startDrag($event)"
   >
     <span class="filling" :class="`filling--${ingredient.value}`">
       {{ ingredient.name }}
@@ -29,10 +28,15 @@ export default {
     },
   },
   methods: {
-    startDrag(event, ingredient) {
+    startDrag(event) {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("ingredientID", ingredient.id);
+      event.dataTransfer.setData("ingredientID", this.ingredient.id);
+    },
+  },
+  computed: {
+    draggable() {
+      return this.ingredient.quantity >= 0 && this.ingredient.quantity < 3;
     },
   },
 };

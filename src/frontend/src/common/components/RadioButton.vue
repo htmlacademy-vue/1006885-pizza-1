@@ -1,5 +1,5 @@
 <template>
-  <label :class="classNames">
+  <label :class="classes">
     <input
       type="radio"
       :name="item.inputName"
@@ -28,12 +28,17 @@ export default {
     },
   },
   computed: {
-    classNames() {
-      if (this.item.inputName === "sauce") {
-        return this.item.labelClassNames;
+    classes() {
+      switch (this.item.inputName) {
+        case "dough":
+          return `dough__input dough__input--${this.item.value}`;
+        case "sauce":
+          return `radio ingredients__input`;
+        case "diameter":
+          return `diameter__input diameter__input--${this.item.value}`;
+        default:
+          return "";
       }
-      const modifier = `${this.item.labelClassNames[0]}--${this.item.value}`;
-      return [...this.item.labelClassNames, modifier];
     },
   },
   methods: {

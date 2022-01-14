@@ -16,11 +16,8 @@ export default {
   },
   data() {
     return {
-      pizza,
+      pizza: updatePizza(pizza),
     };
-  },
-  beforeMount() {
-    updatePizza(this.pizza);
   },
 };
 </script>

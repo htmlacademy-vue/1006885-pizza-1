@@ -5,20 +5,22 @@
         <h1 class="title title--big">Конструктор пиццы</h1>
         <AppBuilderDoughSelector
           :dough="dough"
-          @onRadioChange="onRadioChange"
+          @onRadioChange="onDoughChange"
         />
-        <AppBuilderSizeSelector :sizes="sizes" @onRadioChange="onRadioChange" />
+        <AppBuilderSizeSelector :sizes="sizes" @onRadioChange="onSizeChange" />
         <AppBuilderIngredientsSelector
           :ingredients="ingredients"
           :sauces="sauces"
           @onChangeIngredientCount="onChangeIngredientCount"
-          @onRadioChange="onRadioChange"
+          @onRadioChange="onSauceChange"
         />
         <AppBuilderPizzaView
           :ingredients="ingredients"
           :chosenIngredients="chosenIngredients"
+          :chosenSauce="chosenSauce"
+          :chosenDough="chosenDough"
           :totalPrice="totalPrice"
-          :pizzaViewClassName="pizzaViewClassName"
+          @onIngredientDrop="onIngredientDrop"
         />
       </div>
     </form>
@@ -51,27 +53,19 @@ export default {
       sizes: this.pizza.sizes,
       ingredients: this.pizza.ingredients,
       sauces: this.pizza.sauces,
-      totalPrice: 0,
-      pizzaViewClassName: "pizza--foundation--light-tomato",
-      chosenIngredients: [],
     };
   },
-  methods: {
-    getChosenIngredients() {
-      this.chosenIngredients = this.ingredients.filter(
-        (item) => item.quantity > 0
-      );
+  computed: {
+    chosenSauce() {
+      return this.getCheckedItem(this.sauces);
     },
-    changePizzaViewClassName() {
-      const checkedSauce = this.getCheckedItem(this.sauces);
-      const checkedDough = this.getCheckedItem(this.dough);
-
-      this.pizzaViewClassName = `pizza--foundation--${checkedDough.value}-${checkedSauce.value}`;
+    chosenDough() {
+      return this.getCheckedItem(this.dough);
     },
-    getCheckedItem(arr) {
-      return arr.find((el) => el.checked);
+    chosenIngredients() {
+      return this.ingredients.filter((ingredient) => ingredient.quantity > 0);
     },
-    calculateTotalPrice() {
+    totalPrice() {
       const ingredientsPrice = this.ingredients.reduce((acc, item) => {
         acc += item.price * item.quantity;
         return acc;
@@ -80,32 +74,34 @@ export default {
       const checkedSauce = this.getCheckedItem(this.sauces);
       const checkedSize = this.getCheckedItem(this.sizes);
 
-      this.totalPrice =
+      return (
         (ingredientsPrice + checkedDough.price + checkedSauce.price) *
-        checkedSize.multiplier;
+        checkedSize.multiplier
+      );
     },
-    onChangeIngredientCount() {
-      this.calculateTotalPrice();
-      this.changePizzaViewClassName();
-      this.getChosenIngredients();
+  },
+  methods: {
+    getCheckedItem(arr) {
+      return arr.find((el) => el.checked);
     },
-    onRadioChange(item) {
-      let key;
-      switch (item.inputName) {
-        case "dough":
-          key = "dough";
-          break;
-        case "sauce":
-          key = "sauces";
-          break;
-        case "diameter":
-          key = "sizes";
-          break;
-      }
-      this.pizza[key].forEach((el) => (el.checked = false));
+    onChangeIngredientCount(data) {
+      data.ingredient.quantity = data.quantity;
+    },
+    onIngredientDrop(ingredientID) {
+      this.ingredients.find((ingredient) => ingredient.id === ingredientID)
+        .quantity++;
+    },
+    onDoughChange(item) {
+      this.dough.forEach((el) => (el.checked = false));
       item.checked = true;
-      this.calculateTotalPrice();
-      this.changePizzaViewClassName();
+    },
+    onSauceChange(item) {
+      this.sauces.forEach((el) => (el.checked = false));
+      item.checked = true;
+    },
+    onSizeChange(item) {
+      this.sizes.forEach((el) => (el.checked = false));
+      item.checked = true;
     },
   },
 };

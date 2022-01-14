@@ -2,17 +2,14 @@ export const PIZZA_VALUES = {
   dough: {
     values: ["light", "large"],
     inputName: "dough",
-    labelClassNames: ["dough__input"],
   },
   sauces: {
     values: ["tomato", "creamy"],
     inputName: "sauce",
-    labelClassNames: ["radio", "ingredients__input"],
   },
   sizes: {
     values: ["small", "normal", "big"],
     inputName: "diameter",
-    labelClassNames: ["diameter__input"],
   },
   ingredients: {
     values: [
@@ -33,6 +30,5 @@ export const PIZZA_VALUES = {
       "blue_cheese",
     ],
     inputName: null,
-    labelClassNames: null,
   },
 };
