@@ -1,3 +1,8 @@
+export const INGREDIENTS_LIMITS = {
+  min: 0,
+  max: 3,
+};
+
 export const PIZZA_VALUES = {
   dough: {
     values: ["light", "large"],

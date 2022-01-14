@@ -17,6 +17,7 @@
 
 <script>
 import AppItemCounter from "@/common/components/ItemCounter";
+import { INGREDIENTS_LIMITS } from "@/common/constants";
 
 export default {
   name: "AppIngredientItem",
@@ -36,7 +37,10 @@ export default {
   },
   computed: {
     draggable() {
-      return this.ingredient.quantity >= 0 && this.ingredient.quantity < 3;
+      return (
+        this.ingredient.quantity >= INGREDIENTS_LIMITS.min &&
+        this.ingredient.quantity < INGREDIENTS_LIMITS.max
+      );
     },
   },
 };

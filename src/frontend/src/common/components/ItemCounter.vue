@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { INGREDIENTS_LIMITS } from "@/common/constants";
+
 export default {
   name: "AppItemCounter.vue",
   props: {
@@ -36,10 +38,10 @@ export default {
   },
   computed: {
     disabledDecreaseButton() {
-      return this.item.quantity <= 0;
+      return this.item.quantity <= INGREDIENTS_LIMITS.min;
     },
     disabledIncreaseButton() {
-      return this.item.quantity >= 3;
+      return this.item.quantity >= INGREDIENTS_LIMITS.max;
     },
   },
   methods: {
