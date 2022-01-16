@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <AppLayout :pizza="pizza" />
-  </div>
+  <AppLayout>
+    <router-view :pizza="pizza" />
+  </AppLayout>
 </template>
 
 <script>
