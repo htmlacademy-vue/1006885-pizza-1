@@ -12,6 +12,7 @@ export const modifyBuilderData = (data) => {
       }
     });
   }
+  data.name = "";
   return data;
 };
 
