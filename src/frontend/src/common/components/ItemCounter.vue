@@ -27,6 +27,7 @@
 
 <script>
 import { INGREDIENTS_LIMITS } from "@/common/constants";
+import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppItemCounter.vue",
@@ -46,16 +47,10 @@ export default {
   },
   methods: {
     increase() {
-      this.$emit("onChangeIngredientCount", {
-        ingredient: this.item,
-        quantity: this.item.quantity + 1,
-      });
+      this.$store.commit(mutationTypes.ingredientCountIncrease, this.item.id);
     },
     decrease() {
-      this.$emit("onChangeIngredientCount", {
-        ingredient: this.item,
-        quantity: this.item.quantity - 1,
-      });
+      this.$store.commit(mutationTypes.ingredientCountDecrease, this.item.id);
     },
   },
 };

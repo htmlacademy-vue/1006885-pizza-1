@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Auth from "@/store/modules/Auth";
-import Builder from "@/store/modules/Builder";
-import Cart from "@/store/modules/Cart";
-import Orders from "@/store/modules/Orders";
+import auth from "@/store/modules/auth";
+import builder from "@/store/modules/builder";
+import cart from "@/store/modules/cart";
+import orders from "@/store/modules/orders";
 
 Vue.use(Vuex);
 
@@ -13,9 +13,9 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    Auth,
-    Builder,
-    Cart,
-    Orders,
+    auth,
+    builder,
+    cart,
+    orders,
   },
 });

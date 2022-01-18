@@ -8,10 +8,7 @@
     <span class="filling" :class="`filling--${ingredient.value}`">
       {{ ingredient.name }}
     </span>
-    <AppItemCounter
-      :item="ingredient"
-      @onChangeIngredientCount="$emit('onChangeIngredientCount', $event)"
-    />
+    <AppItemCounter :item="ingredient" />
   </li>
 </template>
 
@@ -45,5 +42,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

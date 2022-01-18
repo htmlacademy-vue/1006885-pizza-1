@@ -3,12 +3,7 @@
     <div class="sheet">
       <h2 class="title title--small sheet__title">Выберите размер</h2>
       <div class="sheet__content diameter">
-        <AppRadioButton
-          v-for="item in sizes"
-          :key="item.id"
-          :item="item"
-          @onRadioChange="$emit('onRadioChange', $event)"
-        />
+        <AppRadioButton v-for="item in sizes" :key="item.id" :item="item" />
       </div>
     </div>
   </div>
@@ -16,15 +11,16 @@
 
 <script>
 import AppRadioButton from "@/common/components/RadioButton";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/builder";
 
 export default {
   name: "AppBuilderSizeSelector",
   components: { AppRadioButton },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters({
+      sizes: gettersTypes.sizes,
+    }),
   },
 };
 </script>

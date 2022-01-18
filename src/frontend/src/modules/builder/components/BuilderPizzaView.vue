@@ -6,9 +6,9 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
+        v-model="pizzaName"
       />
     </label>
-
     <div
       class="content__constructor"
       @drop="onDrop"
@@ -25,39 +25,34 @@
         </div>
       </div>
     </div>
-    <AppBuilderPriceCounter :totalPrice="totalPrice" />
+    <AppBuilderPriceCounter
+      :pizzaName="pizzaName"
+      :chosenIngredients="chosenIngredients"
+    />
   </div>
 </template>
 
 <script>
 import AppBuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
 import AppPizzaIngredientView from "@/modules/builder/components/PizzaIngredientView";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/builder";
+import { mutationTypes } from "@/store/mutation_types";
+
 export default {
   name: "AppBuilderPizzaView",
   components: { AppPizzaIngredientView, AppBuilderPriceCounter },
-  props: {
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-    chosenIngredients: {
-      type: Array,
-      required: true,
-    },
-    chosenSauce: {
-      type: Object,
-      required: true,
-    },
-    chosenDough: {
-      type: Object,
-      required: true,
-    },
+  data() {
+    return {
+      pizzaName: this.pizzaName || "",
+    };
   },
   computed: {
+    ...mapGetters({
+      chosenIngredients: gettersTypes.chosenIngredients,
+      chosenDough: gettersTypes.chosenDough,
+      chosenSauce: gettersTypes.chosenSauce,
+    }),
     pizzaElementClassName() {
       return `pizza--foundation--${this.chosenDough.value}-${this.chosenSauce.value}`;
     },
@@ -65,10 +60,8 @@ export default {
   methods: {
     onDrop(evt) {
       const ingredientID = +evt.dataTransfer.getData("ingredientID");
-      this.$emit("onIngredientDrop", ingredientID);
+      this.$store.commit(mutationTypes.ingredientCountIncrease, ingredientID);
     },
   },
 };
 </script>
-
-<style scoped></style>
