@@ -16,6 +16,13 @@ export const modifyBuilderData = (data) => {
   return data;
 };
 
+export const modifyCartData = (misc) => {
+  misc.forEach((el) => {
+    el.quantity = 0;
+  });
+  return misc;
+};
+
 export const getCheckedItem = (arr) => {
   return arr.find((item) => item.checked);
 };

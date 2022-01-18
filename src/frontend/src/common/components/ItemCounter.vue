@@ -1,5 +1,5 @@
 <template>
-  <div class="counter counter--orange ingredients__counter">
+  <div class="counter" :class="classNames">
     <button
       type="button"
       class="counter__button counter__button--minus"
@@ -17,6 +17,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
+      :class="additionalButtonClassName"
       @click="increase"
       :disabled="disabledIncreaseButton"
     >
@@ -30,11 +31,19 @@ import { INGREDIENTS_LIMITS } from "@/common/constants";
 import { mutationTypes } from "@/store/mutation_types";
 
 export default {
-  name: "AppItemCounter.vue",
+  name: "AppItemCounter",
   props: {
     item: {
       type: Object,
       required: true,
+    },
+    classNames: {
+      type: String,
+      required: true,
+    },
+    additionalButtonClassName: {
+      type: String,
+      default: "",
     },
   },
   computed: {

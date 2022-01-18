@@ -8,7 +8,10 @@
     <span class="filling" :class="`filling--${ingredient.value}`">
       {{ ingredient.name }}
     </span>
-    <AppItemCounter :item="ingredient" />
+    <AppItemCounter
+      :item="ingredient"
+      :classNames="'counter--orange ingredients__counter'"
+    />
   </li>
 </template>
 

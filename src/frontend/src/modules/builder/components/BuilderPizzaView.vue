@@ -6,7 +6,7 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
-        v-model="pizzaName"
+        @input="onPizzaNameChange"
       />
     </label>
     <div
@@ -25,10 +25,7 @@
         </div>
       </div>
     </div>
-    <AppBuilderPriceCounter
-      :pizzaName="pizzaName"
-      :chosenIngredients="chosenIngredients"
-    />
+    <AppBuilderPriceCounter />
   </div>
 </template>
 
@@ -42,11 +39,6 @@ import { mutationTypes } from "@/store/mutation_types";
 export default {
   name: "AppBuilderPizzaView",
   components: { AppPizzaIngredientView, AppBuilderPriceCounter },
-  data() {
-    return {
-      pizzaName: this.pizzaName || "",
-    };
-  },
   computed: {
     ...mapGetters({
       chosenIngredients: gettersTypes.chosenIngredients,
@@ -61,6 +53,9 @@ export default {
     onDrop(evt) {
       const ingredientID = +evt.dataTransfer.getData("ingredientID");
       this.$store.commit(mutationTypes.ingredientCountIncrease, ingredientID);
+    },
+    onPizzaNameChange(evt) {
+      this.$store.commit(mutationTypes.pizzaNameChange, evt.target.value);
     },
   },
 };

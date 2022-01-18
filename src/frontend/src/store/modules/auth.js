@@ -1,7 +1,22 @@
+export const actionTypes = {};
+
+export const gettersTypes = {};
+
+const state = {
+  data: null,
+  isLoading: false,
+  error: null,
+};
+
+const getters = {};
+
+const mutations = {};
+
+const actions = {};
+
 export default {
-  namespaced: true,
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
+  state,
+  getters,
+  mutations,
+  actions,
 };

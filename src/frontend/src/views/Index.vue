@@ -35,7 +35,7 @@ export default {
     AppBuilderPizzaView,
   },
   created() {
-    this.$store.dispatch(actionTypes.getBuilderData);
+    this.$store.dispatch(actionTypes.loadBuilderData);
   },
   computed: {
     ...mapState({

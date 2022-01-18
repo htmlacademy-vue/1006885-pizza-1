@@ -11,18 +11,10 @@ import { gettersTypes } from "@/store/modules/builder";
 
 export default {
   name: "AppBuilderPriceCounter",
-  props: {
-    pizzaName: {
-      type: String,
-      required: true,
-    },
-    chosenIngredients: {
-      type: Array,
-      required: true,
-    },
-  },
   computed: {
     ...mapGetters({
+      pizzaName: gettersTypes.pizzaName,
+      chosenIngredients: gettersTypes.chosenIngredients,
       totalPrice: gettersTypes.totalPrice,
     }),
     disabled() {
