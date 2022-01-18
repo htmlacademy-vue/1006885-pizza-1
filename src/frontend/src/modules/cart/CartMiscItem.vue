@@ -6,6 +6,7 @@
     </p>
     <div class="additional-list__wrapper">
       <AppItemCounter
+        :kind="'misc'"
         :item="item"
         :classNames="'additional-list__counter'"
         :additionalButtonClassName="'counter__button--orange'"
@@ -29,5 +30,10 @@ export default {
       required: true,
     },
   },
+  // computed: {
+  //   totalPrice() {
+  //     return this.item.price * this.item.quantity;
+  //   },
+  // },
 };
 </script>

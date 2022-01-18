@@ -14,4 +14,10 @@ export const mutationTypes = {
   loadCartDataStart: "[cart] Load cart data start",
   loadCartDataSuccess: "[cart] Load cart data success",
   loadCartDataFailure: "[cart] Load cart data failure",
+  addPizzaToCart: "[cart] Add pizza to cart",
+  pizzaCountDecrease: "[cart] Decrease pizza count",
+  pizzaCountIncrease: "[cart] Increase pizza count",
+  miscCountDecrease: "[cart] Decrease misc count",
+  miscCountIncrease: "[cart] Increase misc count",
+  deletePizza: "[cart] Delete pizza",
 };

@@ -4,12 +4,10 @@ import {
   getCheckedItem,
   setItemChecked,
   getElementById,
+  getTotalArrayPrice,
 } from "@/common/helpers";
 import { mutationTypes } from "@/store/mutation_types";
-
-export const actionTypes = {
-  loadBuilderData: "[builder] Load builder data from server",
-};
+import { actionTypes } from "@/store/action_types";
 
 export const gettersTypes = {
   pizzaName: "[builder] Get pizzaName",
@@ -19,6 +17,7 @@ export const gettersTypes = {
   sizes: "[builder] Get sizes",
   chosenSauce: "[builder] Get chosenSauce",
   chosenDough: "[builder] Get chosenDough",
+  chosenSize: "[builder] Get chosenSize",
   chosenIngredients: "[builder] Get chosenIngredients",
   totalPrice: "[builder] Get totalPrice",
 };
@@ -37,13 +36,11 @@ const getters = {
   [gettersTypes.sizes]: (state) => state.data.sizes,
   [gettersTypes.chosenDough]: (state) => getCheckedItem(state.data.dough),
   [gettersTypes.chosenSauce]: (state) => getCheckedItem(state.data.sauces),
+  [gettersTypes.chosenSize]: (state) => getCheckedItem(state.data.sizes),
   [gettersTypes.chosenIngredients]: (state) =>
     state.data.ingredients.filter((ingredient) => ingredient.quantity > 0),
   [gettersTypes.totalPrice]: (state) => {
-    const ingredientsPrice = state.data.ingredients.reduce((acc, item) => {
-      acc += item.price * item.quantity;
-      return acc;
-    }, 0);
+    const ingredientsPrice = getTotalArrayPrice(state.data.ingredients);
     const checkedDough = getCheckedItem(state.data.dough);
     const checkedSauce = getCheckedItem(state.data.sauces);
     const checkedSize = getCheckedItem(state.data.sizes);

@@ -12,7 +12,7 @@
       Перейти к конструктору<br />чтоб собрать ещё одну пиццу
     </p>
     <div class="footer__price">
-      <b>Итого: 2 228 ₽</b>
+      <b>Итого: {{ totalPrice }} ₽</b>
     </div>
     <div class="footer__submit">
       <button type="submit" class="button">Оформить заказ</button>
@@ -21,9 +21,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/cart";
+
 export default {
   name: "AppLayoutFooter",
+  computed: {
+    ...mapGetters({
+      totalPrice: gettersTypes.totalPrice,
+    }),
+  },
 };
 </script>
-
-<style scoped></style>

@@ -2,30 +2,40 @@
   <li class="cart-list__item">
     <div class="product cart-list__product">
       <img
-        src="@/assets/img/product.svg"
+        :src="pizza.image"
         class="product__img"
         width="56"
         height="56"
-        alt="Капричоза"
+        :alt="pizza.name"
       />
       <div class="product__text">
-        <h2>Капричоза</h2>
+        <h2>{{ pizza.name }}</h2>
         <ul>
-          <li>30 см, на тонком тесте</li>
-          <li>Соус: томатный</li>
-          <li>Начинка: грибы, лук, ветчина, пармезан, ананас</li>
+          <li>{{ pizza.composition.size }}, {{ pizza.composition.dough }}</li>
+          <li>Соус: {{ pizza.composition.sauce }}</li>
+          <li>
+            Начинка:
+            <span
+              v-for="(item, index) in pizza.composition.ingredients"
+              :key="index"
+            >
+              {{ item }}
+              <i v-if="index !== pizza.composition.ingredients.length - 1">,</i>
+            </span>
+          </li>
         </ul>
       </div>
     </div>
 
     <AppItemCounter
-      :item="{ quantity: 1 }"
+      :kind="'pizza'"
+      :item="pizza"
       :classNames="'cart-list__counter'"
       :additionalButtonClassName="'counter__button--orange'"
     />
 
     <div class="cart-list__price">
-      <b>782 ₽</b>
+      <b>{{ totalPrice }} ₽</b>
     </div>
 
     <div class="cart-list__button">
@@ -39,5 +49,16 @@ import AppItemCounter from "@/common/components/ItemCounter";
 export default {
   name: "AppCartPizzaItem",
   components: { AppItemCounter },
+  props: {
+    pizza: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    totalPrice() {
+      return this.pizza.price * this.pizza.quantity;
+    },
+  },
 };
 </script>

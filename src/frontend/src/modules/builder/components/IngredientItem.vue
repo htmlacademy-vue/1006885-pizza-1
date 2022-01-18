@@ -9,6 +9,7 @@
       {{ ingredient.name }}
     </span>
     <AppItemCounter
+      :kind="'ingredient'"
       :item="ingredient"
       :classNames="'counter--orange ingredients__counter'"
     />

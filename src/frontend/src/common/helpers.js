@@ -10,6 +10,9 @@ export const modifyBuilderData = (data) => {
       } else {
         el.checked = el.id === 1;
       }
+      if (key === "dough") {
+        el.cartDescription = PIZZA_VALUES[key].cartDescriptions[index];
+      }
     });
   }
   data.name = "";
@@ -36,4 +39,11 @@ export const setItemChecked = (arr, item) => {
 
 export const getElementById = (arr, id) => {
   return arr.find((el) => el.id === id);
+};
+
+export const getTotalArrayPrice = (arr) => {
+  return arr.reduce((acc, item) => {
+    acc += item.price * item.quantity;
+    return acc;
+  }, 0);
 };

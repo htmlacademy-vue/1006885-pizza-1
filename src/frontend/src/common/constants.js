@@ -7,6 +7,7 @@ export const PIZZA_VALUES = {
   dough: {
     values: ["light", "large"],
     inputName: "dough",
+    cartDescriptions: ["на тонком тесте", "на толстом тесте"],
   },
   sauces: {
     values: ["tomato", "creamy"],

@@ -1,13 +1,17 @@
-import { mutationTypes } from "@/store/mutation_types";
 import misc from "@/static/misc.json";
-import { modifyCartData } from "@/common/helpers";
-
-export const actionTypes = {
-  loadCartData: "[cart] Load cart data from server",
-};
+import {
+  modifyCartData,
+  getElementById,
+  getTotalArrayPrice,
+} from "@/common/helpers";
+import { mutationTypes } from "@/store/mutation_types";
+import { actionTypes } from "@/store/action_types";
 
 export const gettersTypes = {
   misc: "[cart] Get misc",
+  pizzas: "[cart] Get pizzas",
+  totalPrice: "[cart] Get total price: all pizzas + all misc",
+  pizzaLastIndex: "[cart] Get last pizza last index",
 };
 
 const state = {
@@ -18,6 +22,14 @@ const state = {
 
 const getters = {
   [gettersTypes.misc]: (state) => state.data.misc,
+  [gettersTypes.pizzas]: (state) => state.data.pizzas,
+  [gettersTypes.pizzaLastIndex]: (state) => state.data.pizzas.length,
+  [gettersTypes.totalPrice]: (state) => {
+    return (
+      getTotalArrayPrice(state.data.pizzas) +
+      getTotalArrayPrice(state.data.misc)
+    );
+  },
 };
 
 const mutations = {
@@ -32,6 +44,28 @@ const mutations = {
   [mutationTypes.loadCartDataFailure](state) {
     state.isLoading = false;
   },
+  [mutationTypes.addPizzaToCart](state, payload) {
+    state.data.pizzas.push(payload);
+  },
+  [mutationTypes.pizzaCountDecrease](state, payload) {
+    getElementById(state.data.pizzas, payload).quantity--;
+  },
+  [mutationTypes.pizzaCountIncrease](state, payload) {
+    getElementById(state.data.pizzas, payload).quantity++;
+  },
+  [mutationTypes.miscCountDecrease](state, payload) {
+    getElementById(state.data.misc, payload).quantity--;
+  },
+  [mutationTypes.miscCountIncrease](state, payload) {
+    getElementById(state.data.misc, payload).quantity++;
+  },
+  [mutationTypes.deletePizza](state, payload) {
+    const index = state.data.pizzas.findIndex((el) => el.id === payload);
+    console.log(payload);
+    if (index !== -1) {
+      state.data.pizzas.splice(index, 1);
+    }
+  },
 };
 
 const actions = {
@@ -39,6 +73,7 @@ const actions = {
     context.commit(mutationTypes.loadCartDataSuccess, {
       misc: modifyCartData(misc),
       addresses: [],
+      pizzas: [],
     });
   },
 };

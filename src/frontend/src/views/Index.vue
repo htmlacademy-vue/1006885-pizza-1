@@ -20,7 +20,6 @@ import AppBuilderSizeSelector from "@/modules/builder/components/BuilderSizeSele
 import AppBuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import AppBuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import { mapState } from "vuex";
-import { actionTypes } from "@/store/modules/builder";
 import AppLoader from "@/common/components/Loader";
 import AppErrorMessage from "@/common/components/ErrorMessage";
 
@@ -33,9 +32,6 @@ export default {
     AppBuilderSizeSelector,
     AppBuilderIngredientsSelector,
     AppBuilderPizzaView,
-  },
-  created() {
-    this.$store.dispatch(actionTypes.loadBuilderData);
   },
   computed: {
     ...mapState({

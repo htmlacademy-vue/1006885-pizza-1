@@ -5,10 +5,10 @@
         <h1 class="title title--big">Корзина</h1>
       </div>
 
-      <!-- <div class="sheet cart__empty">
+      <div v-if="pizzas.length === 0" class="sheet cart__empty">
         <p>В корзине нет ни одного товара</p>
-      </div> -->
-      <template>
+      </div>
+      <template v-else>
         <AppCartPizzasList />
         <AppCartMiscList />
         <div class="cart__form">
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { actionTypes } from "@/store/modules/cart";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/cart";
 import AppCartPizzasList from "@/modules/cart/CartPizzasList";
 import AppCartMiscList from "@/modules/cart/CartMiscList";
 import AppCartAddressSelect from "@/modules/cart/CartAddressSelect";
@@ -42,14 +42,9 @@ export default {
     AppCartNewAddress,
   },
   computed: {
-    ...mapState({
-      isLoading: (state) => state.cart.isLoading,
-      error: (state) => state.cart.error,
-      data: (state) => state.cart.data,
+    ...mapGetters({
+      pizzas: gettersTypes.pizzas,
     }),
-  },
-  created() {
-    this.$store.dispatch(actionTypes.loadCartData);
   },
 };
 </script>
