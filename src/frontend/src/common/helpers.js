@@ -26,6 +26,10 @@ export const modifyCartData = (misc) => {
   return misc;
 };
 
+export const getElementById = (arr, id) => {
+  return arr.find((el) => el.id === id);
+};
+
 export const getCheckedItem = (arr) => {
   return arr.find((item) => item.checked);
 };
@@ -37,8 +41,11 @@ export const setItemChecked = (arr, item) => {
   item.checked = true;
 };
 
-export const getElementById = (arr, id) => {
-  return arr.find((el) => el.id === id);
+export const updateItemChecked = (arr, id) => {
+  arr.forEach((el) => {
+    el.checked = false;
+  });
+  getElementById(arr, id).checked = true;
 };
 
 export const getTotalArrayPrice = (arr) => {
@@ -46,4 +53,21 @@ export const getTotalArrayPrice = (arr) => {
     acc += item.price * item.quantity;
     return acc;
   }, 0);
+};
+
+export const resetData = (data) => {
+  data.name = "";
+  for (let key in data) {
+    if (key === "name") {
+      continue;
+    }
+    data[key].forEach((el) => {
+      if (key === "ingredients") {
+        el.quantity = 0;
+      } else {
+        el.checked = el.id === 1;
+      }
+    });
+  }
+  return data;
 };

@@ -1,8 +1,10 @@
 import pizza from "@/static/pizza.json";
 import {
   modifyBuilderData,
+  resetData,
   getCheckedItem,
   setItemChecked,
+  updateItemChecked,
   getElementById,
   getTotalArrayPrice,
 } from "@/common/helpers";
@@ -64,6 +66,24 @@ const mutations = {
   },
   [mutationTypes.loadBuilderDataFailure](state) {
     state.isLoading = false;
+  },
+  [mutationTypes.fillBuilderData](state, payload) {
+    state.data.name = payload.name;
+    updateItemChecked(state.data.dough, payload.dough.id);
+    updateItemChecked(state.data.sizes, payload.size.id);
+    updateItemChecked(state.data.sauces, payload.sauce.id);
+    const ingredients = payload.ingredients.map((el) => {
+      return {
+        id: el.id,
+        quantity: el.quantity,
+      };
+    });
+    ingredients.forEach((el) => {
+      getElementById(state.data.ingredients, el.id).quantity = el.quantity;
+    });
+  },
+  [mutationTypes.resetBuilderData](state) {
+    state.data = resetData(state.data);
   },
   [mutationTypes.doughSelect](state, payload) {
     setItemChecked(state.data.dough, payload);

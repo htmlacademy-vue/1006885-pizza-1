@@ -33,11 +33,13 @@ export default {
     disabled() {
       return this.pizzaName === "" || this.ingredients.length === 0;
     },
+    slug() {
+      return this.$route.params.slug || null;
+    },
   },
   methods: {
     addToCart() {
       const pizza = {
-        id: this.pizzaLastIndex + 1,
         name: this.pizzaName,
         quantity: 1,
         price: this.totalPrice,
@@ -47,9 +49,22 @@ export default {
         ingredients: this.ingredients,
       };
 
-      this.$store.commit(mutationTypes.addPizzaToCart, pizza);
+      if (!this.slug) {
+        pizza.id = this.pizzaLastIndex + 1;
+        this.$store.commit(
+          mutationTypes.addPizzaToCart,
+          JSON.parse(JSON.stringify(pizza))
+        );
+      } else {
+        pizza.id = Number(this.slug);
+        this.$store.commit(
+          mutationTypes.updatePizzaInCart,
+          JSON.parse(JSON.stringify(pizza))
+        );
+      }
+
+      this.$store.commit(mutationTypes.resetBuilderData);
       this.$router.push({ name: "Cart" });
-      // Очистить форму
     },
   },
 };

@@ -5,6 +5,7 @@
       <input
         type="text"
         name="pizza_name"
+        :value="name"
         placeholder="Введите название пиццы"
         @input="onPizzaNameChange"
       />
@@ -41,6 +42,7 @@ export default {
   components: { AppPizzaIngredientView, AppBuilderPriceCounter },
   computed: {
     ...mapGetters({
+      name: gettersTypes.pizzaName,
       chosenIngredients: gettersTypes.chosenIngredients,
       chosenDough: gettersTypes.chosenDough,
       chosenSauce: gettersTypes.chosenSauce,

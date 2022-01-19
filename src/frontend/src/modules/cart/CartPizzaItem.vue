@@ -30,7 +30,13 @@
     </div>
 
     <div class="cart-list__button">
-      <button type="button" class="cart-list__edit">Изменить</button>
+      <router-link
+        type="button"
+        class="cart-list__edit"
+        :to="{ name: 'PizzaEdit', params: { slug: pizza.id } }"
+      >
+        Изменить
+      </router-link>
     </div>
   </li>
 </template>
