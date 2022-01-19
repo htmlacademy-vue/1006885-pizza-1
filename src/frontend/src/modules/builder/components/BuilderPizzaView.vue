@@ -18,9 +18,9 @@
       <div class="pizza" :class="pizzaElementClassName">
         <div class="pizza__wrapper">
           <AppPizzaIngredientView
-            v-for="ingredient in chosenIngredients"
-            :key="ingredient.id"
-            :ingredient="ingredient"
+            v-for="(item, index) in allIngredients"
+            :key="index"
+            :item="item"
           />
         </div>
       </div>
@@ -47,6 +47,18 @@ export default {
     }),
     pizzaElementClassName() {
       return `pizza--foundation--${this.chosenDough.value}-${this.chosenSauce.value}`;
+    },
+    allIngredients() {
+      const newArr = [];
+      this.chosenIngredients.forEach((el) => {
+        for (let i = 1; i <= el.quantity; i++) {
+          newArr.push({
+            ingredient: el,
+            number: i,
+          });
+        }
+      });
+      return newArr;
     },
   },
   methods: {
