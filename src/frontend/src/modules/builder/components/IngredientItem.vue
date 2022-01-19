@@ -9,9 +9,10 @@
       {{ ingredient.name }}
     </span>
     <AppItemCounter
-      :kind="'ingredient'"
       :item="ingredient"
       :classNames="'counter--orange ingredients__counter'"
+      :disabledIncreaseButton="ingredient.quantity >= 3"
+      @onChangeCount="$emit('onChangeCount', $event)"
     />
   </li>
 </template>

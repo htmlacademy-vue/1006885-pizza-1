@@ -28,10 +28,10 @@
     </div>
 
     <AppItemCounter
-      :kind="'pizza'"
       :item="pizza"
       :classNames="'cart-list__counter'"
       :additionalButtonClassName="'counter__button--orange'"
+      @onChangeCount="$emit('onChangeCount', $event)"
     />
 
     <div class="cart-list__price">

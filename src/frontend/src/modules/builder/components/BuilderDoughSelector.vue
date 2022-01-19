@@ -3,7 +3,13 @@
     <div class="sheet">
       <h2 class="title title--small sheet__title">Выберите тесто</h2>
       <div class="sheet__content dough">
-        <AppRadioButton v-for="item in dough" :key="item.id" :item="item" />
+        <AppRadioButton
+          v-for="item in dough"
+          :key="item.id"
+          :item="item"
+          :classes="`dough__input dough__input--${item.value}`"
+          @onRadioChange="$emit('onRadioChange', $event)"
+        />
       </div>
     </div>
   </div>

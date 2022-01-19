@@ -3,7 +3,13 @@
     <div class="sheet">
       <h2 class="title title--small sheet__title">Выберите размер</h2>
       <div class="sheet__content diameter">
-        <AppRadioButton v-for="item in sizes" :key="item.id" :item="item" />
+        <AppRadioButton
+          v-for="item in sizes"
+          :key="item.id"
+          :item="item"
+          :classes="`diameter__input diameter__input--${item.value}`"
+          @onRadioChange="$emit('onRadioChange', $event)"
+        />
       </div>
     </div>
   </div>

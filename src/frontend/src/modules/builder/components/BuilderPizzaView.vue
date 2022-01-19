@@ -52,7 +52,7 @@ export default {
   methods: {
     onDrop(evt) {
       const ingredientID = +evt.dataTransfer.getData("ingredientID");
-      this.$store.commit(mutationTypes.ingredientCountIncrease, ingredientID);
+      this.$emit("onDrop", ingredientID);
     },
     onPizzaNameChange(evt) {
       this.$store.commit(mutationTypes.pizzaNameChange, evt.target.value);

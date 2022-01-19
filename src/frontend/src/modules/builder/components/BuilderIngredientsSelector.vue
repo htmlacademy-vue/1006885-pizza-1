@@ -4,7 +4,9 @@
       <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
 
       <div class="sheet__content ingredients">
-        <AppBuilderSauceSelector />
+        <AppBuilderSauceSelector
+          @onRadioChange="$emit('onRadioChange', $event)"
+        />
         <div class="ingredients__filling">
           <p>Начинка:</p>
 
@@ -13,6 +15,7 @@
               v-for="ingredient in ingredients"
               :key="ingredient.id"
               :ingredient="ingredient"
+              @onChangeCount="$emit('onChangeCount', $event)"
             />
           </ul>
         </div>

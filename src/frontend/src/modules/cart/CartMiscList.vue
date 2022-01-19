@@ -1,7 +1,12 @@
 <template>
   <div class="cart__additional">
     <ul class="additional-list">
-      <AppCartMiscItem v-for="item in misc" :key="item.id" :item="item" />
+      <AppCartMiscItem
+        v-for="item in misc"
+        :key="item.id"
+        :item="item"
+        @onChangeCount="$emit('onChangeCount', $event)"
+      />
     </ul>
   </div>
 </template>

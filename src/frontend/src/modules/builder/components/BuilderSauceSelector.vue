@@ -1,7 +1,13 @@
 <template>
   <div class="ingredients__sauce">
     <p>Основной соус:</p>
-    <AppRadioButton v-for="item in sauces" :key="item.id" :item="item" />
+    <AppRadioButton
+      v-for="item in sauces"
+      :key="item.id"
+      :item="item"
+      :classes="`radio ingredients__input`"
+      @onRadioChange="$emit('onRadioChange', $event)"
+    />
   </div>
 </template>
 

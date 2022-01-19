@@ -4,6 +4,7 @@
       v-for="(pizza, index) in pizzas"
       :key="index"
       :pizza="pizza"
+      @onChangeCount="$emit('onChangeCount', $event)"
     />
   </ul>
 </template>

@@ -9,8 +9,8 @@
         <p>В корзине нет ни одного товара</p>
       </div>
       <template v-else>
-        <AppCartPizzasList />
-        <AppCartMiscList />
+        <AppCartPizzasList @onChangeCount="onChangePizzaCount" />
+        <AppCartMiscList @onChangeCount="onChangeMiscCount" />
         <div class="cart__form">
           <div class="cart-form">
             <AppCartAddressSelect />
@@ -31,6 +31,7 @@ import AppCartMiscList from "@/modules/cart/CartMiscList";
 import AppCartAddressSelect from "@/modules/cart/CartAddressSelect";
 import AppCartPhoneNumber from "@/modules/cart/CartPhoneNumber";
 import AppCartNewAddress from "@/modules/cart/CartNewAddress";
+import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppCart",
@@ -45,6 +46,14 @@ export default {
     ...mapGetters({
       pizzas: gettersTypes.pizzas,
     }),
+  },
+  methods: {
+    onChangePizzaCount(data) {
+      this.$store.commit(mutationTypes.pizzaCountChange, data);
+    },
+    onChangeMiscCount(data) {
+      this.$store.commit(mutationTypes.miscCountChange, data);
+    },
   },
 };
 </script>

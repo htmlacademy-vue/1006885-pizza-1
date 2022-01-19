@@ -47,17 +47,13 @@ const mutations = {
   [mutationTypes.addPizzaToCart](state, payload) {
     state.data.pizzas.push(payload);
   },
-  [mutationTypes.pizzaCountDecrease](state, payload) {
-    getElementById(state.data.pizzas, payload).quantity--;
+  [mutationTypes.pizzaCountChange](state, payload) {
+    getElementById(state.data.pizzas, payload.item.id).quantity =
+      payload.quantity;
   },
-  [mutationTypes.pizzaCountIncrease](state, payload) {
-    getElementById(state.data.pizzas, payload).quantity++;
-  },
-  [mutationTypes.miscCountDecrease](state, payload) {
-    getElementById(state.data.misc, payload).quantity--;
-  },
-  [mutationTypes.miscCountIncrease](state, payload) {
-    getElementById(state.data.misc, payload).quantity++;
+  [mutationTypes.miscCountChange](state, payload) {
+    getElementById(state.data.misc, payload.item.id).quantity =
+      payload.quantity;
   },
   [mutationTypes.deletePizza](state, payload) {
     const index = state.data.pizzas.findIndex((el) => el.id === payload);

@@ -74,10 +74,11 @@ const mutations = {
   [mutationTypes.sizeSelect](state, payload) {
     setItemChecked(state.data.sizes, payload);
   },
-  [mutationTypes.ingredientCountDecrease](state, payload) {
-    getElementById(state.data.ingredients, payload).quantity--;
+  [mutationTypes.ingredientCountChange](state, payload) {
+    getElementById(state.data.ingredients, payload.item.id).quantity =
+      payload.quantity;
   },
-  [mutationTypes.ingredientCountIncrease](state, payload) {
+  [mutationTypes.ingredientDrop](state, payload) {
     getElementById(state.data.ingredients, payload).quantity++;
   },
   [mutationTypes.pizzaNameChange](state, payload) {

@@ -5,10 +5,13 @@
     <form v-if="pizza" action="#" method="post">
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
-        <AppBuilderDoughSelector />
-        <AppBuilderSizeSelector />
-        <AppBuilderIngredientsSelector />
-        <AppBuilderPizzaView />
+        <AppBuilderDoughSelector @onRadioChange="onDoughChange" />
+        <AppBuilderSizeSelector @onRadioChange="onSizeChange" />
+        <AppBuilderIngredientsSelector
+          @onRadioChange="onSauceChange"
+          @onChangeCount="onChangeIngredientCount"
+        />
+        <AppBuilderPizzaView @onDrop="onIngredientDrop" />
       </div>
     </form>
   </main>
@@ -22,6 +25,7 @@ import AppBuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import { mapState } from "vuex";
 import AppLoader from "@/common/components/Loader";
 import AppErrorMessage from "@/common/components/ErrorMessage";
+import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppIndex",
@@ -39,6 +43,23 @@ export default {
       error: (state) => state.builder.error,
       pizza: (state) => state.builder.data,
     }),
+  },
+  methods: {
+    onDoughChange(item) {
+      this.$store.commit(mutationTypes.doughSelect, item);
+    },
+    onSizeChange(item) {
+      this.$store.commit(mutationTypes.sizeSelect, item);
+    },
+    onSauceChange(item) {
+      this.$store.commit(mutationTypes.sauceSelect, item);
+    },
+    onChangeIngredientCount(data) {
+      this.$store.commit(mutationTypes.ingredientCountChange, data);
+    },
+    onIngredientDrop(ingredientID) {
+      this.$store.commit(mutationTypes.ingredientDrop, ingredientID);
+    },
   },
 };
 </script>

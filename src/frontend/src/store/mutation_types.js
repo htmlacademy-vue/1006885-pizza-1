@@ -6,8 +6,8 @@ export const mutationTypes = {
   doughSelect: "[builder] Select dough in builder data",
   sauceSelect: "[builder] Select sauce in builder data",
   sizeSelect: "[builder] Select size in builder data",
-  ingredientCountDecrease: "[builder] Decrease ingredient count",
-  ingredientCountIncrease: "[builder] Increase ingredient count",
+  ingredientCountChange: "[builder] Change ingredient count",
+  ingredientDrop: "[builder] On drop ingredient to pizza",
   pizzaNameChange: "[builder] Change pizza name",
 
   // cart
@@ -15,9 +15,7 @@ export const mutationTypes = {
   loadCartDataSuccess: "[cart] Load cart data success",
   loadCartDataFailure: "[cart] Load cart data failure",
   addPizzaToCart: "[cart] Add pizza to cart",
-  pizzaCountDecrease: "[cart] Decrease pizza count",
-  pizzaCountIncrease: "[cart] Increase pizza count",
-  miscCountDecrease: "[cart] Decrease misc count",
-  miscCountIncrease: "[cart] Increase misc count",
+  pizzaCountChange: "[cart] Change pizza count",
+  miscCountChange: "[cart] Decrease misc count",
   deletePizza: "[cart] Delete pizza",
 };
