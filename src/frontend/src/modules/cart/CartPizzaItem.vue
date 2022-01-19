@@ -11,18 +11,9 @@
       <div class="product__text">
         <h2>{{ pizza.name }}</h2>
         <ul>
-          <li>{{ pizza.composition.size }}, {{ pizza.composition.dough }}</li>
-          <li>Соус: {{ pizza.composition.sauce }}</li>
-          <li>
-            Начинка:
-            <span
-              v-for="(item, index) in pizza.composition.ingredients"
-              :key="index"
-            >
-              {{ item }}
-              <i v-if="index !== pizza.composition.ingredients.length - 1">,</i>
-            </span>
-          </li>
+          <li>{{ pizza.size.name }}, {{ pizza.dough.cartDescription }}</li>
+          <li>Соус: {{ pizza.sauce.name.toLowerCase() }}</li>
+          <li>Начинка: {{ ingredients }}</li>
         </ul>
       </div>
     </div>
@@ -46,6 +37,8 @@
 
 <script>
 import AppItemCounter from "@/common/components/ItemCounter";
+import { mutationTypes } from "@/store/mutation_types";
+
 export default {
   name: "AppCartPizzaItem",
   components: { AppItemCounter },
@@ -56,8 +49,23 @@ export default {
     },
   },
   computed: {
+    ingredients() {
+      return this.pizza.ingredients
+        .map((el) => el.name.toLowerCase())
+        .join(", ");
+    },
     totalPrice() {
       return this.pizza.price * this.pizza.quantity;
+    },
+    quantity() {
+      return this.pizza.quantity;
+    },
+  },
+  watch: {
+    quantity(quantity) {
+      if (quantity === 0) {
+        this.$store.commit(mutationTypes.deletePizza, this.pizza.id);
+      }
     },
   },
 };

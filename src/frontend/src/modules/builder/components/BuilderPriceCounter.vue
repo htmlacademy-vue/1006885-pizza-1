@@ -26,12 +26,12 @@ export default {
       dough: gettersTypes.chosenDough,
       size: gettersTypes.chosenSize,
       sauce: gettersTypes.chosenSauce,
-      chosenIngredients: gettersTypes.chosenIngredients,
+      ingredients: gettersTypes.chosenIngredients,
       totalPrice: gettersTypes.totalPrice,
       pizzaLastIndex: cartGetterTypes.pizzaLastIndex,
     }),
     disabled() {
-      return this.pizzaName === "" || this.chosenIngredients.length === 0;
+      return this.pizzaName === "" || this.ingredients.length === 0;
     },
   },
   methods: {
@@ -41,21 +41,10 @@ export default {
         name: this.pizzaName,
         quantity: 1,
         price: this.totalPrice,
-        image: "",
-        sauceId: this.sauce.id,
-        doughId: this.dough.id,
-        sizeId: this.size.id,
-        ingredients: this.chosenIngredients.map((el) => {
-          return { ingredientId: el.id, quantity: el.quantity };
-        }),
-        composition: {
-          dough: this.dough.cartDescription,
-          size: this.size.name,
-          sauce: this.sauce.name.toLowerCase(),
-          ingredients: this.chosenIngredients.map((el) =>
-            el.name.toLowerCase()
-          ),
-        },
+        dough: this.dough,
+        size: this.size,
+        sauce: this.sauce,
+        ingredients: this.ingredients,
       };
 
       this.$store.commit(mutationTypes.addPizzaToCart, pizza);

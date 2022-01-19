@@ -1,8 +1,8 @@
 <template>
   <ul class="cart-list sheet">
     <AppCartPizzaItem
-      v-for="(pizza, index) in pizzas"
-      :key="index"
+      v-for="pizza in pizzas"
+      :key="pizza.id"
       :pizza="pizza"
       @onChangeCount="$emit('onChangeCount', $event)"
     />

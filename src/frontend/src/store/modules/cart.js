@@ -57,7 +57,6 @@ const mutations = {
   },
   [mutationTypes.deletePizza](state, payload) {
     const index = state.data.pizzas.findIndex((el) => el.id === payload);
-    console.log(payload);
     if (index !== -1) {
       state.data.pizzas.splice(index, 1);
     }
