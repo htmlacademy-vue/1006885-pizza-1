@@ -33,6 +33,9 @@ export default {
     disabled() {
       return this.pizzaName === "" || this.ingredients.length === 0;
     },
+    routeName() {
+      return this.$route.name;
+    },
     slug() {
       return this.$route.params.slug || null;
     },
@@ -49,18 +52,20 @@ export default {
         ingredients: this.ingredients,
       };
 
-      if (!this.slug) {
+      if (this.routeName === "IndexHome") {
         pizza.id = this.pizzaLastIndex + 1;
         this.$store.commit(
           mutationTypes.addPizzaToCart,
           JSON.parse(JSON.stringify(pizza))
         );
-      } else {
+      } else if (this.path === "PizzaEdit" && this.slug) {
         pizza.id = Number(this.slug);
         this.$store.commit(
           mutationTypes.updatePizzaInCart,
           JSON.parse(JSON.stringify(pizza))
         );
+      } else {
+        return;
       }
 
       this.$store.commit(mutationTypes.resetBuilderData);

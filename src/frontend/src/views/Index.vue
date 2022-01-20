@@ -39,6 +39,9 @@ export default {
     AppBuilderPizzaView,
   },
   computed: {
+    routeName() {
+      return this.$route.name;
+    },
     slug() {
       return this.$route.params.slug || null;
     },
@@ -51,7 +54,7 @@ export default {
       pizzas: gettersTypes.pizzas,
     }),
     pizza() {
-      if (this.slug) {
+      if (this.routeName === "PizzaEdit" && this.slug) {
         const pizza = this.pizzas[this.slug - 1];
         this.$store.commit(mutationTypes.fillBuilderData, pizza);
       }
