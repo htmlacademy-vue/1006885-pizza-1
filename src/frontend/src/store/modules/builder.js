@@ -76,7 +76,8 @@ const mutations = {
       };
     });
     selectedIngredients.forEach((el) => {
-      ingredients[el.id - 1].quantity = el.quantity;
+      const index = ingredients.findIndex((item) => item.id === el.id);
+      ingredients[index].quantity = el.quantity;
     });
 
     const newData = {
@@ -86,11 +87,13 @@ const mutations = {
       sauces: updateCheckedItem(state.data.sauces, payload.sauce),
       ingredients: ingredients,
     };
-    state.data = Object.assign({}, state.data, newData);
+    console.log("NEW", newData);
+    console.log("BEFORE", state.data);
+    state.data = Object.assign(state.data, newData);
+    console.log("AFTER", state.data);
   },
   [mutationTypes.resetBuilderData](state) {
     resetData(state.data);
-    console.log(state.data);
   },
   [mutationTypes.doughSelect](state, payload) {
     setItemChecked(state.data.dough, payload);
