@@ -89,7 +89,8 @@ const mutations = {
     state.data = Object.assign({}, state.data, newData);
   },
   [mutationTypes.resetBuilderData](state) {
-    state.data = resetData(state.data);
+    resetData(state.data);
+    console.log(state.data);
   },
   [mutationTypes.doughSelect](state, payload) {
     setItemChecked(state.data.dough, payload);

@@ -56,7 +56,6 @@ export const getTotalArrayPrice = (arr) => {
 };
 
 export const resetData = (data) => {
-  data = JSON.parse(JSON.stringify(data));
   data.name = "";
   for (let key in data) {
     if (key === "name") {
@@ -70,5 +69,4 @@ export const resetData = (data) => {
       }
     });
   }
-  return data;
 };
