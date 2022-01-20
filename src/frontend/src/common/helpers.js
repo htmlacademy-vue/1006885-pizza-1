@@ -41,11 +41,11 @@ export const setItemChecked = (arr, item) => {
   item.checked = true;
 };
 
-export const updateItemChecked = (arr, id) => {
-  arr.forEach((el) => {
-    el.checked = false;
-  });
-  getElementById(arr, id).checked = true;
+export const updateCheckedItem = (arr, newData) => {
+  const newArr = [...arr];
+  newArr.forEach((el) => (el.checked = false));
+  newArr.splice(newData.id - 1, 1, newData);
+  return newArr;
 };
 
 export const getTotalArrayPrice = (arr) => {

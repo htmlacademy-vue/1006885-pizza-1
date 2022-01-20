@@ -22,12 +22,11 @@ import AppBuilderDoughSelector from "@/modules/builder/components/BuilderDoughSe
 import AppBuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import AppBuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import AppBuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
-import { mapGetters, mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/cart";
 import AppLoader from "@/common/components/Loader";
 import AppErrorMessage from "@/common/components/ErrorMessage";
 import { mutationTypes } from "@/store/mutation_types";
-import { gettersTypes } from "@/store/modules/cart";
-import { getElementById } from "@/common/helpers";
 
 export default {
   name: "AppIndex",
@@ -46,14 +45,14 @@ export default {
     ...mapState({
       isLoading: (state) => state.builder.isLoading,
       error: (state) => state.builder.error,
-      // pizza: (state) => state.builder.data,
+      pizza: (state) => state.builder.data,
     }),
     ...mapGetters({
       pizzas: gettersTypes.pizzas,
     }),
     pizza() {
       if (this.slug) {
-        const pizza = getElementById(this.pizzas, this.slug);
+        const pizza = this.pizzas[this.slug - 1];
         this.$store.commit(mutationTypes.fillBuilderData, pizza);
       }
       return this.$store.state.builder.data;

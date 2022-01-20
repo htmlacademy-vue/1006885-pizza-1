@@ -4,7 +4,7 @@ import {
   resetData,
   getCheckedItem,
   setItemChecked,
-  updateItemChecked,
+  updateCheckedItem,
   getElementById,
   getTotalArrayPrice,
 } from "@/common/helpers";
@@ -68,19 +68,25 @@ const mutations = {
     state.isLoading = false;
   },
   [mutationTypes.fillBuilderData](state, payload) {
-    state.data.name = payload.name;
-    updateItemChecked(state.data.dough, payload.dough.id);
-    updateItemChecked(state.data.sizes, payload.size.id);
-    updateItemChecked(state.data.sauces, payload.sauce.id);
-    const ingredients = payload.ingredients.map((el) => {
+    const ingredients = [...state.data.ingredients];
+    const selectedIngredients = payload.ingredients.map((el) => {
       return {
         id: el.id,
         quantity: el.quantity,
       };
     });
-    ingredients.forEach((el) => {
-      getElementById(state.data.ingredients, el.id).quantity = el.quantity;
+    selectedIngredients.forEach((el) => {
+      ingredients[el.id - 1].quantity = el.quantity;
     });
+
+    const newData = {
+      name: payload.name,
+      dough: updateCheckedItem(state.data.dough, payload.dough),
+      sizes: updateCheckedItem(state.data.sizes, payload.size),
+      sauces: updateCheckedItem(state.data.sauces, payload.sauce),
+      ingredients: ingredients,
+    };
+    state.data = Object.assign({}, state.data, newData);
   },
   [mutationTypes.resetBuilderData](state) {
     state.data = resetData(state.data);

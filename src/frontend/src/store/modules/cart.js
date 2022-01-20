@@ -48,7 +48,7 @@ const mutations = {
     state.data.pizzas.push(payload);
   },
   [mutationTypes.updatePizzaInCart](state, payload) {
-    state.data.pizzas[payload.id - 1] = payload;
+    state.data.pizzas.splice(payload.id - 1, 1, payload);
   },
   [mutationTypes.pizzaCountChange](state, payload) {
     getElementById(state.data.pizzas, payload.item.id).quantity =
