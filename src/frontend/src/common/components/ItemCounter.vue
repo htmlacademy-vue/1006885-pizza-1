@@ -42,14 +42,17 @@ export default {
       type: String,
       default: "",
     },
-    disabledIncreaseButton: {
-      type: Boolean,
-      default: false,
+    maxCount: {
+      type: Number,
+      default: null,
     },
   },
   computed: {
     disabledDecreaseButton() {
       return this.item.quantity <= 0;
+    },
+    disabledIncreaseButton() {
+      return this.maxCount ? this.item.quantity >= this.maxCount : false;
     },
   },
   methods: {

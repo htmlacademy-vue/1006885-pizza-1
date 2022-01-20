@@ -11,7 +11,7 @@
     <AppItemCounter
       :item="ingredient"
       :classNames="'counter--orange ingredients__counter'"
-      :disabledIncreaseButton="ingredient.quantity >= 3"
+      :maxCount="maxCount"
       @onChangeCount="$emit('onChangeCount', $event)"
     />
   </li>
@@ -29,6 +29,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      maxCount: INGREDIENTS_LIMITS.max,
+    };
   },
   methods: {
     startDrag(event) {

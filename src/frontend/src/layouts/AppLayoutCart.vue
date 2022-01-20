@@ -1,7 +1,12 @@
 <template>
   <div id="cart">
     <AppLayoutHeader />
-    <form action="test.html" method="post" class="layout-form">
+    <form
+      action="test.html"
+      method="post"
+      class="layout-form"
+      @submit.prevent="onSubmit"
+    >
       <slot />
       <AppLayoutFooter />
     </form>
@@ -15,6 +20,17 @@ import AppLayoutFooter from "@/layouts/AppLayoutFooter";
 export default {
   name: "AppLayoutCart",
   components: { AppLayoutFooter, AppLayoutHeader },
+  data() {
+    return {
+      modalShow: false,
+    };
+  },
+  methods: {
+    onSubmit() {
+      console.log("CREATE ORDER");
+      this.modalShow = true;
+    },
+  },
 };
 </script>
 

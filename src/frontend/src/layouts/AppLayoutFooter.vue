@@ -15,9 +15,7 @@
       <b>Итого: {{ totalPrice }} ₽</b>
     </div>
     <div class="footer__submit">
-      <button type="submit" class="button" @submit.prevent="onSubmit">
-        Оформить заказ
-      </button>
+      <button type="submit" class="button">Оформить заказ</button>
     </div>
   </section>
 </template>

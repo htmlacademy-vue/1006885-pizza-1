@@ -20,6 +20,7 @@
         </div>
       </template>
     </div>
+    <AppCartModal v-show="false" />
   </main>
 </template>
 
@@ -32,16 +33,24 @@ import AppCartAddressSelect from "@/modules/cart/CartAddressSelect";
 import AppCartPhoneNumber from "@/modules/cart/CartPhoneNumber";
 import AppCartNewAddress from "@/modules/cart/CartNewAddress";
 import { mutationTypes } from "@/store/mutation_types";
+import AppCartModal from "@/modules/cart/CartModal";
 
 export default {
   name: "AppCart",
   components: {
+    AppCartModal,
     AppCartMiscList,
     AppCartPizzasList,
     AppCartAddressSelect,
     AppCartPhoneNumber,
     AppCartNewAddress,
   },
+  // props: {
+  //   modalShow: {
+  //     type: Boolean,
+  //     required: true,
+  //   },
+  // },
   computed: {
     ...mapGetters({
       pizzas: gettersTypes.pizzas,

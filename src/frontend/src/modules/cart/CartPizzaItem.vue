@@ -43,7 +43,6 @@
 
 <script>
 import AppItemCounter from "@/common/components/ItemCounter";
-import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppCartPizzaItem",
@@ -65,13 +64,6 @@ export default {
     },
     quantity() {
       return this.pizza.quantity;
-    },
-  },
-  watch: {
-    quantity(quantity) {
-      if (quantity === 0) {
-        this.$store.commit(mutationTypes.deletePizza, this.pizza.id);
-      }
     },
   },
 };

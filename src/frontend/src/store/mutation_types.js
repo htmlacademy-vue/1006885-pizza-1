@@ -21,4 +21,5 @@ export const mutationTypes = {
   pizzaCountChange: "[cart] Change pizza count",
   miscCountChange: "[cart] Decrease misc count",
   deletePizza: "[cart] Delete pizza",
+  increasePizzaCount: "[cart] Increase pizza count",
 };

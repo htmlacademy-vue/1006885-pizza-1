@@ -11,7 +11,7 @@ export const gettersTypes = {
   misc: "[cart] Get misc",
   pizzas: "[cart] Get pizzas",
   totalPrice: "[cart] Get total price: all pizzas + all misc",
-  pizzaLastIndex: "[cart] Get last pizza last index",
+  pizzaCount: "[cart] Get pizza count",
 };
 
 const state = {
@@ -23,7 +23,7 @@ const state = {
 const getters = {
   [gettersTypes.misc]: (state) => state.data.misc,
   [gettersTypes.pizzas]: (state) => state.data.pizzas,
-  [gettersTypes.pizzaLastIndex]: (state) => state.data.pizzas.length,
+  [gettersTypes.pizzaCount]: (state) => state.data.pizzaCount,
   [gettersTypes.totalPrice]: (state) => {
     return (
       getTotalArrayPrice(state.data.pizzas) +
@@ -48,21 +48,25 @@ const mutations = {
     state.data.pizzas.push(payload);
   },
   [mutationTypes.updatePizzaInCart](state, payload) {
-    state.data.pizzas.splice(payload.id - 1, 1, payload);
+    const index = state.data.pizzas.findIndex((el) => el.id === payload.id);
+    state.data.pizzas.splice(index, 1, payload);
   },
   [mutationTypes.pizzaCountChange](state, payload) {
-    getElementById(state.data.pizzas, payload.item.id).quantity =
-      payload.quantity;
+    const pizza = getElementById(state.data.pizzas, payload.item.id);
+    pizza.quantity = payload.quantity;
+    if (pizza.quantity === 0) {
+      const index = state.data.pizzas.findIndex((el) => el.id === pizza.id);
+      if (index !== -1) {
+        state.data.pizzas.splice(index, 1);
+      }
+    }
   },
   [mutationTypes.miscCountChange](state, payload) {
     getElementById(state.data.misc, payload.item.id).quantity =
       payload.quantity;
   },
-  [mutationTypes.deletePizza](state, payload) {
-    const index = state.data.pizzas.findIndex((el) => el.id === payload);
-    if (index !== -1) {
-      state.data.pizzas.splice(index, 1);
-    }
+  [mutationTypes.increasePizzaCount](state) {
+    state.data.pizzaCount++;
   },
 };
 
@@ -72,6 +76,7 @@ const actions = {
       misc: modifyCartData(misc),
       addresses: [],
       pizzas: [],
+      pizzaCount: 0,
     });
   },
 };

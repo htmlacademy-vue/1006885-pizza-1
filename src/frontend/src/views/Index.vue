@@ -55,8 +55,10 @@ export default {
     }),
     pizza() {
       if (this.routeName === "PizzaEdit" && this.slug) {
-        const pizza = this.pizzas[this.slug - 1];
+        const pizza = this.pizzas.find((pizza) => pizza.id === this.slug);
         this.$store.commit(mutationTypes.fillBuilderData, pizza);
+      } else if (this.routeName === "IndexHome") {
+        this.$store.commit(mutationTypes.resetBuilderData);
       }
       return this.$store.state.builder.data;
     },

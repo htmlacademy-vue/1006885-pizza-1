@@ -28,7 +28,7 @@ export default {
       sauce: gettersTypes.chosenSauce,
       ingredients: gettersTypes.chosenIngredients,
       totalPrice: gettersTypes.totalPrice,
-      pizzaLastIndex: cartGetterTypes.pizzaLastIndex,
+      pizzaCount: cartGetterTypes.pizzaCount,
     }),
     disabled() {
       return this.pizzaName === "" || this.ingredients.length === 0;
@@ -43,6 +43,7 @@ export default {
   methods: {
     addToCart() {
       const pizza = {
+        id: null,
         name: this.pizzaName,
         quantity: 1,
         price: this.totalPrice,
@@ -53,13 +54,15 @@ export default {
       };
 
       if (this.routeName === "IndexHome") {
-        pizza.id = this.pizzaLastIndex + 1;
+        // Добавление в корзину
+        this.$store.commit(mutationTypes.increasePizzaCount);
+        pizza.id = this.pizzaCount;
         this.$store.commit(
           mutationTypes.addPizzaToCart,
           JSON.parse(JSON.stringify(pizza))
         );
-      } else if (this.path === "PizzaEdit" && this.slug) {
-        pizza.id = Number(this.slug);
+      } else if (this.routeName === "PizzaEdit" && this.slug) {
+        // Обновление
         this.$store.commit(
           mutationTypes.updatePizzaInCart,
           JSON.parse(JSON.stringify(pizza))
@@ -68,7 +71,7 @@ export default {
         return;
       }
 
-      this.$store.commit(mutationTypes.resetBuilderData);
+      // this.$store.commit(mutationTypes.resetBuilderData);
       this.$router.push({ name: "Cart" });
     },
   },

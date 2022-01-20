@@ -19,8 +19,8 @@
       <div class="pizza" :class="pizzaElementClassName">
         <div class="pizza__wrapper">
           <AppPizzaIngredientView
-            v-for="(item, index) in allIngredients"
-            :key="index"
+            v-for="item in allIngredients"
+            :key="item.ingredient.id + '-' + item.number"
             :item="item"
           />
         </div>
