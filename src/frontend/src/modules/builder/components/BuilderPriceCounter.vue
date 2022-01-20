@@ -63,6 +63,7 @@ export default {
         );
       } else if (this.routeName === "PizzaEdit" && this.slug) {
         // Обновление
+        pizza.id = this.slug;
         this.$store.commit(
           mutationTypes.updatePizzaInCart,
           JSON.parse(JSON.stringify(pizza))
