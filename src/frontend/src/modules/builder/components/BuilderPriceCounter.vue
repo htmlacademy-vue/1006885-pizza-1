@@ -71,7 +71,6 @@ export default {
         return;
       }
 
-      this.$store.commit(mutationTypes.resetBuilderData);
       this.$router.push({ name: "Cart" });
     },
   },

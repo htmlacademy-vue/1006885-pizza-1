@@ -68,6 +68,8 @@ const mutations = {
     state.isLoading = false;
   },
   [mutationTypes.fillBuilderData](state, payload) {
+    console.log("FILL BUILDER");
+
     const ingredients = [...state.data.ingredients];
     const selectedIngredients = payload.ingredients.map((el) => {
       return {
@@ -93,6 +95,7 @@ const mutations = {
     console.log("AFTER", state.data);
   },
   [mutationTypes.resetBuilderData](state) {
+    console.log("RESET BUILDER");
     resetData(state.data);
   },
   [mutationTypes.doughSelect](state, payload) {

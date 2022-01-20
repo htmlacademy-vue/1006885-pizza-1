@@ -39,12 +39,6 @@ export default {
     AppBuilderPizzaView,
   },
   computed: {
-    routeName() {
-      return this.$route.name;
-    },
-    slug() {
-      return this.$route.params.slug || null;
-    },
     ...mapState({
       isLoading: (state) => state.builder.isLoading,
       error: (state) => state.builder.error,
@@ -53,15 +47,16 @@ export default {
     ...mapGetters({
       pizzas: gettersTypes.pizzas,
     }),
-    pizza() {
-      if (this.routeName === "PizzaEdit" && this.slug) {
-        // const pizza = this.pizzas.find((pizza) => pizza.id === this.slug);
-        // this.$store.commit(mutationTypes.fillBuilderData, pizza);
-      } else if (this.routeName === "IndexHome") {
-        // this.$store.commit(mutationTypes.resetBuilderData);
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (to.name === "PizzaEdit" && to.params.slug) {
+        const pizza = vm.pizzas.find((pizza) => pizza.id === to.params.slug);
+        vm.$store.commit(mutationTypes.fillBuilderData, pizza);
+      } else if (to.name === "IndexHome") {
+        vm.$store.commit(mutationTypes.resetBuilderData);
       }
-      return this.$store.state.builder.data;
-    },
+    });
   },
   methods: {
     onDoughChange(item) {
