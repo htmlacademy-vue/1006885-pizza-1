@@ -5,6 +5,7 @@
       v-for="item in sauces"
       :key="item.id"
       :item="item"
+      :classes="`radio ingredients__input`"
       @onRadioChange="$emit('onRadioChange', $event)"
     />
   </div>
@@ -12,15 +13,16 @@
 
 <script>
 import AppRadioButton from "@/common/components/RadioButton";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/builder";
 
 export default {
   name: "AppBuilderSauceSelector",
   components: { AppRadioButton },
-  props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters({
+      sauces: gettersTypes.sauces,
+    }),
   },
 };
 </script>

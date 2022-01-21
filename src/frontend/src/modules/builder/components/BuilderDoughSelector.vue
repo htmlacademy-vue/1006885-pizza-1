@@ -7,6 +7,7 @@
           v-for="item in dough"
           :key="item.id"
           :item="item"
+          :classes="`dough__input dough__input--${item.value}`"
           @onRadioChange="$emit('onRadioChange', $event)"
         />
       </div>
@@ -16,15 +17,16 @@
 
 <script>
 import AppRadioButton from "@/common/components/RadioButton";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/builder";
 
 export default {
   name: "AppBuilderDoughSelector",
   components: { AppRadioButton },
-  props: {
-    dough: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters({
+      dough: gettersTypes.dough,
+    }),
   },
 };
 </script>

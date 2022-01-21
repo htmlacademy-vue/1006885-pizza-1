@@ -5,7 +5,6 @@
 
       <div class="sheet__content ingredients">
         <AppBuilderSauceSelector
-          :sauces="sauces"
           @onRadioChange="$emit('onRadioChange', $event)"
         />
         <div class="ingredients__filling">
@@ -16,9 +15,7 @@
               v-for="ingredient in ingredients"
               :key="ingredient.id"
               :ingredient="ingredient"
-              @onChangeIngredientCount="
-                $emit('onChangeIngredientCount', $event)
-              "
+              @onChangeCount="$emit('onChangeCount', $event)"
             />
           </ul>
         </div>
@@ -30,19 +27,16 @@
 <script>
 import AppBuilderSauceSelector from "@/modules/builder/components/BuilderSauceSelector";
 import AppIngredientItem from "@/modules/builder/components/IngredientItem";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/builder";
 
 export default {
   name: "AppBuilderIngredientsSelector",
   components: { AppIngredientItem, AppBuilderSauceSelector },
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-    sauces: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters({
+      ingredients: gettersTypes.ingredients,
+    }),
   },
 };
 </script>

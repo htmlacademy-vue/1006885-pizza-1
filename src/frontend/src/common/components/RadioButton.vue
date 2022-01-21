@@ -26,19 +26,9 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  computed: {
-    classes() {
-      switch (this.item.inputName) {
-        case "dough":
-          return `dough__input dough__input--${this.item.value}`;
-        case "sauce":
-          return `radio ingredients__input`;
-        case "diameter":
-          return `diameter__input diameter__input--${this.item.value}`;
-        default:
-          return "";
-      }
+    classes: {
+      type: String,
+      required: true,
     },
   },
   methods: {

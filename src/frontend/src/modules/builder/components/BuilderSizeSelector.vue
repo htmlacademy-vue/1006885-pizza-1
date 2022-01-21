@@ -7,6 +7,7 @@
           v-for="item in sizes"
           :key="item.id"
           :item="item"
+          :classes="`diameter__input diameter__input--${item.value}`"
           @onRadioChange="$emit('onRadioChange', $event)"
         />
       </div>
@@ -16,15 +17,16 @@
 
 <script>
 import AppRadioButton from "@/common/components/RadioButton";
+import { mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/builder";
 
 export default {
   name: "AppBuilderSizeSelector",
   components: { AppRadioButton },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters({
+      sizes: gettersTypes.sizes,
+    }),
   },
 };
 </script>

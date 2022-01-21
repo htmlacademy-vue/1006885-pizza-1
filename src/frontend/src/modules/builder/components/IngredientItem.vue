@@ -10,7 +10,9 @@
     </span>
     <AppItemCounter
       :item="ingredient"
-      @onChangeIngredientCount="$emit('onChangeIngredientCount', $event)"
+      :classNames="'counter--orange ingredients__counter'"
+      :maxCount="maxCount"
+      @onChangeCount="$emit('onChangeCount', $event)"
     />
   </li>
 </template>
@@ -27,6 +29,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      maxCount: INGREDIENTS_LIMITS.max,
+    };
   },
   methods: {
     startDrag(event) {
@@ -45,5 +52,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

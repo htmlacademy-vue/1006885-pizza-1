@@ -1,27 +1,17 @@
 <template>
   <main class="content">
-    <form action="#" method="post">
+    <AppLoader v-if="isLoading" />
+    <AppErrorMessage v-if="error" />
+    <form v-if="pizza" action="#" method="post">
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
-        <AppBuilderDoughSelector
-          :dough="dough"
-          @onRadioChange="onDoughChange"
-        />
-        <AppBuilderSizeSelector :sizes="sizes" @onRadioChange="onSizeChange" />
+        <AppBuilderDoughSelector @onRadioChange="onDoughChange" />
+        <AppBuilderSizeSelector @onRadioChange="onSizeChange" />
         <AppBuilderIngredientsSelector
-          :ingredients="ingredients"
-          :sauces="sauces"
-          @onChangeIngredientCount="onChangeIngredientCount"
           @onRadioChange="onSauceChange"
+          @onChangeCount="onChangeIngredientCount"
         />
-        <AppBuilderPizzaView
-          :ingredients="ingredients"
-          :chosenIngredients="chosenIngredients"
-          :chosenSauce="chosenSauce"
-          :chosenDough="chosenDough"
-          :totalPrice="totalPrice"
-          @onIngredientDrop="onIngredientDrop"
-        />
+        <AppBuilderPizzaView @onDrop="onIngredientDrop" />
       </div>
     </form>
   </main>
@@ -32,76 +22,57 @@ import AppBuilderDoughSelector from "@/modules/builder/components/BuilderDoughSe
 import AppBuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import AppBuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import AppBuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
+import { mapState, mapGetters } from "vuex";
+import { gettersTypes } from "@/store/modules/cart";
+import AppLoader from "@/common/components/Loader";
+import AppErrorMessage from "@/common/components/ErrorMessage";
+import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppIndex",
   components: {
-    AppBuilderPizzaView,
-    AppBuilderIngredientsSelector,
-    AppBuilderSizeSelector,
+    AppLoader,
+    AppErrorMessage,
     AppBuilderDoughSelector,
-  },
-  props: {
-    pizza: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      dough: this.pizza.dough,
-      sizes: this.pizza.sizes,
-      ingredients: this.pizza.ingredients,
-      sauces: this.pizza.sauces,
-    };
+    AppBuilderSizeSelector,
+    AppBuilderIngredientsSelector,
+    AppBuilderPizzaView,
   },
   computed: {
-    chosenSauce() {
-      return this.getCheckedItem(this.sauces);
-    },
-    chosenDough() {
-      return this.getCheckedItem(this.dough);
-    },
-    chosenIngredients() {
-      return this.ingredients.filter((ingredient) => ingredient.quantity > 0);
-    },
-    totalPrice() {
-      const ingredientsPrice = this.ingredients.reduce((acc, item) => {
-        acc += item.price * item.quantity;
-        return acc;
-      }, 0);
-      const checkedDough = this.getCheckedItem(this.dough);
-      const checkedSauce = this.getCheckedItem(this.sauces);
-      const checkedSize = this.getCheckedItem(this.sizes);
-
-      return (
-        (ingredientsPrice + checkedDough.price + checkedSauce.price) *
-        checkedSize.multiplier
-      );
-    },
+    ...mapState({
+      isLoading: (state) => state.builder.isLoading,
+      error: (state) => state.builder.error,
+      pizza: (state) => state.builder.data,
+    }),
+    ...mapGetters({
+      pizzas: gettersTypes.pizzas,
+    }),
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (to.name === "PizzaEdit" && to.params.slug) {
+        const pizza = vm.pizzas.find((pizza) => pizza.id === to.params.slug);
+        vm.$store.commit(mutationTypes.fillBuilderData, pizza);
+      } else if (to.name === "IndexHome") {
+        vm.$store.commit(mutationTypes.resetBuilderData);
+      }
+    });
   },
   methods: {
-    getCheckedItem(arr) {
-      return arr.find((el) => el.checked);
-    },
-    onChangeIngredientCount(data) {
-      data.ingredient.quantity = data.quantity;
-    },
-    onIngredientDrop(ingredientID) {
-      this.ingredients.find((ingredient) => ingredient.id === ingredientID)
-        .quantity++;
-    },
     onDoughChange(item) {
-      this.dough.forEach((el) => (el.checked = false));
-      item.checked = true;
-    },
-    onSauceChange(item) {
-      this.sauces.forEach((el) => (el.checked = false));
-      item.checked = true;
+      this.$store.commit(mutationTypes.doughSelect, item);
     },
     onSizeChange(item) {
-      this.sizes.forEach((el) => (el.checked = false));
-      item.checked = true;
+      this.$store.commit(mutationTypes.sizeSelect, item);
+    },
+    onSauceChange(item) {
+      this.$store.commit(mutationTypes.sauceSelect, item);
+    },
+    onChangeIngredientCount(data) {
+      this.$store.commit(mutationTypes.ingredientCountChange, data);
+    },
+    onIngredientDrop(ingredientID) {
+      this.$store.commit(mutationTypes.ingredientDrop, ingredientID);
     },
   },
 };

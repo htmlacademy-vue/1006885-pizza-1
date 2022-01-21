@@ -1,23 +1,21 @@
 <template>
-  <AppLayout>
-    <router-view :pizza="pizza" />
-  </AppLayout>
+  <div id="app">
+    <AppLayout> <router-view :key="$route.fullPath" /> </AppLayout>
+  </div>
 </template>
 
 <script>
 import AppLayout from "./layouts/AppLayout";
-import pizza from "@/static/pizza.json";
-import { updatePizza } from "@/common/helpers";
+import { actionTypes } from "@/store/action_types";
 
 export default {
   name: "App",
   components: {
     AppLayout,
   },
-  data() {
-    return {
-      pizza: updatePizza(pizza),
-    };
+  created() {
+    this.$store.dispatch(actionTypes.loadBuilderData);
+    this.$store.dispatch(actionTypes.loadCartData);
   },
 };
 </script>

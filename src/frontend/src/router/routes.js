@@ -39,6 +39,11 @@ export default [
     },
   },
   {
+    path: "/cart/pizza/edit/:slug",
+    name: "PizzaEdit",
+    component: IndexHome,
+  },
+  {
     path: "/orders",
     name: "Orders",
     component: AppOrders,
