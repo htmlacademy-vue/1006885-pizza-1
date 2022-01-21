@@ -1,8 +1,8 @@
 <template>
   <div class="popup">
-    <a href="#" class="close">
+    <button type="button" class="close" @click="onCloseButtonClick">
       <span class="visually-hidden">Закрыть попап</span>
-    </a>
+    </button>
     <div class="popup__title">
       <h2 class="title">Спасибо за заказ</h2>
     </div>
@@ -14,7 +14,16 @@
 </template>
 
 <script>
+import { mutationTypes } from "@/store/mutation_types";
+
 export default {
   name: "AppCartModal",
+  methods: {
+    onCloseButtonClick() {
+      console.log("CLOSE POPUP");
+      this.$store.commit(mutationTypes.toggleModalShow, false);
+      this.$router.push({ name: "IndexHome" }); // для авторизованных пользователей редирект на страницу заказов
+    },
+  },
 };
 </script>

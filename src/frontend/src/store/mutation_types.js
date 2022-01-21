@@ -22,4 +22,5 @@ export const mutationTypes = {
   miscCountChange: "[cart] Decrease misc count",
   deletePizza: "[cart] Delete pizza",
   increasePizzaCount: "[cart] Increase pizza count",
+  toggleModalShow: "[cart] Toggle show modal window",
 };
