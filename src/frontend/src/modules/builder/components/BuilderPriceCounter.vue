@@ -5,7 +5,7 @@
       type="button"
       class="button"
       :disabled="disabled"
-      @click="addToCart"
+      @click="onPrepareButtonClick"
     >
       Готовьте!
     </button>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { cloneDeep } from "lodash";
 import { mapGetters } from "vuex";
 import { gettersTypes } from "@/store/modules/builder";
 import { gettersTypes as cartGetterTypes } from "@/store/modules/cart";
@@ -22,6 +23,7 @@ export default {
   name: "AppBuilderPriceCounter",
   computed: {
     ...mapGetters({
+      pizzaId: gettersTypes.pizzaId,
       pizzaName: gettersTypes.pizzaName,
       dough: gettersTypes.chosenDough,
       size: gettersTypes.chosenSize,
@@ -33,17 +35,11 @@ export default {
     disabled() {
       return this.pizzaName === "" || this.ingredients.length === 0;
     },
-    routeName() {
-      return this.$route.name;
-    },
-    slug() {
-      return this.$route.params.slug || null;
-    },
   },
   methods: {
-    addToCart() {
+    onPrepareButtonClick() {
       const pizza = {
-        id: null,
+        id: this.pizzaId,
         name: this.pizzaName,
         quantity: 1,
         price: this.totalPrice,
@@ -53,25 +49,16 @@ export default {
         ingredients: this.ingredients,
       };
 
-      if (this.routeName === "IndexHome") {
+      if (!this.pizzaId) {
         // Добавление в корзину
         this.$store.commit(mutationTypes.increasePizzaCount);
         pizza.id = this.pizzaCount;
-        this.$store.commit(
-          mutationTypes.addPizzaToCart,
-          JSON.parse(JSON.stringify(pizza))
-        );
-      } else if (this.routeName === "PizzaEdit" && this.slug) {
-        // Обновление
-        pizza.id = this.slug;
-        this.$store.commit(
-          mutationTypes.updatePizzaInCart,
-          JSON.parse(JSON.stringify(pizza))
-        );
+        this.$store.commit(mutationTypes.addPizzaToCart, cloneDeep(pizza));
       } else {
-        return;
+        // Обновление
+        this.$store.commit(mutationTypes.updatePizzaInCart, cloneDeep(pizza));
       }
-
+      this.$store.commit(mutationTypes.resetBuilderData);
       this.$router.push({ name: "Cart" });
     },
   },

@@ -1,10 +1,12 @@
 import pizza from "@/static/pizza.json";
+import { cloneDeep } from "lodash";
 import {
   modifyBuilderData,
   resetData,
   getCheckedItem,
   setItemChecked,
   updateCheckedItem,
+  updateIngredients,
   getElementById,
   getTotalArrayPrice,
 } from "@/common/helpers";
@@ -12,6 +14,7 @@ import { mutationTypes } from "@/store/mutation_types";
 import { actionTypes } from "@/store/action_types";
 
 export const gettersTypes = {
+  pizzaId: "[builder] Get pizza ID",
   pizzaName: "[builder] Get pizzaName",
   dough: "[builder] Get dough",
   ingredients: "[builder] Get ingredients",
@@ -31,6 +34,7 @@ const state = {
 };
 
 const getters = {
+  [gettersTypes.pizzaId]: (state) => state.data.id || null,
   [gettersTypes.pizzaName]: (state) => state.data.name,
   [gettersTypes.dough]: (state) => state.data.dough,
   [gettersTypes.ingredients]: (state) => state.data.ingredients,
@@ -68,35 +72,21 @@ const mutations = {
     state.isLoading = false;
   },
   [mutationTypes.fillBuilderData](state, payload) {
-    console.log("FILL BUILDER");
-
-    const ingredients = [...state.data.ingredients];
-    const selectedIngredients = payload.ingredients.map((el) => {
-      return {
-        id: el.id,
-        quantity: el.quantity,
-      };
-    });
-    selectedIngredients.forEach((el) => {
-      const index = ingredients.findIndex((item) => item.id === el.id);
-      ingredients[index].quantity = el.quantity;
-    });
-
     const newData = {
+      id: payload.id,
       name: payload.name,
-      dough: updateCheckedItem(state.data.dough, payload.dough),
-      sizes: updateCheckedItem(state.data.sizes, payload.size),
-      sauces: updateCheckedItem(state.data.sauces, payload.sauce),
-      ingredients: ingredients,
+      dough: updateCheckedItem(cloneDeep(state.data.dough), payload.dough),
+      sizes: updateCheckedItem(cloneDeep(state.data.sizes), payload.size),
+      sauces: updateCheckedItem(cloneDeep(state.data.sauces), payload.sauce),
+      ingredients: updateIngredients(
+        cloneDeep(state.data.ingredients),
+        payload.ingredients
+      ),
     };
-    console.log("NEW", newData);
-    console.log("BEFORE", state.data);
-    state.data = Object.assign(state.data, newData);
-    console.log("AFTER", state.data);
+    state.data = Object.assign({}, cloneDeep(state.data), newData);
   },
   [mutationTypes.resetBuilderData](state) {
-    console.log("RESET BUILDER");
-    resetData(state.data);
+    state.data = resetData(cloneDeep(state.data));
   },
   [mutationTypes.doughSelect](state, payload) {
     setItemChecked(state.data.dough, payload);

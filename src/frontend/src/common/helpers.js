@@ -42,10 +42,24 @@ export const setItemChecked = (arr, item) => {
 };
 
 export const updateCheckedItem = (arr, newData) => {
-  const newArr = [...arr];
-  newArr.forEach((el) => (el.checked = false));
-  newArr.splice(newData.id - 1, 1, newData);
-  return newArr;
+  arr.forEach((el) => (el.checked = false));
+  const index = arr.findIndex((item) => item.id === newData.id);
+  arr.splice(index, 1, newData);
+  return arr;
+};
+
+export const updateIngredients = (arr, newData) => {
+  const selectedIngredients = newData.map((el) => {
+    return {
+      id: el.id,
+      quantity: el.quantity,
+    };
+  });
+  selectedIngredients.forEach((el) => {
+    const index = arr.findIndex((item) => item.id === el.id);
+    arr[index].quantity = el.quantity;
+  });
+  return arr;
 };
 
 export const getTotalArrayPrice = (arr) => {
@@ -56,6 +70,9 @@ export const getTotalArrayPrice = (arr) => {
 };
 
 export const resetData = (data) => {
+  if (Object.hasOwn(data, "id")) {
+    delete data.id;
+  }
   data.name = "";
   for (let key in data) {
     if (key === "name") {
@@ -69,4 +86,5 @@ export const resetData = (data) => {
       }
     });
   }
+  return data;
 };
