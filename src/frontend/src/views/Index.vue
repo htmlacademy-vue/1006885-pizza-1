@@ -22,10 +22,9 @@ import AppBuilderDoughSelector from "@/modules/builder/components/BuilderDoughSe
 import AppBuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import AppBuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import AppBuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
-import { mapState, mapGetters } from "vuex";
-import { gettersTypes } from "@/store/modules/cart";
 import AppLoader from "@/common/components/Loader";
 import AppErrorMessage from "@/common/components/ErrorMessage";
+import { mapState } from "vuex";
 import { mutationTypes } from "@/store/mutation_types";
 
 export default {
@@ -44,19 +43,6 @@ export default {
       error: (state) => state.builder.error,
       pizza: (state) => state.builder.data,
     }),
-    ...mapGetters({
-      pizzas: gettersTypes.pizzas,
-    }),
-  },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (to.name === "PizzaEdit" && to.params.slug) {
-        const pizza = vm.pizzas.find((pizza) => pizza.id === to.params.slug);
-        vm.$store.commit(mutationTypes.fillBuilderData, pizza);
-      } else if (to.name === "IndexHome") {
-        vm.$store.commit(mutationTypes.resetBuilderData);
-      }
-    });
   },
   methods: {
     onDoughChange(item) {

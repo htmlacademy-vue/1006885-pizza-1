@@ -30,19 +30,21 @@
     </div>
 
     <div class="cart-list__button">
-      <router-link
+      <a
+        href="#"
         type="button"
         class="cart-list__edit"
-        :to="{ name: 'PizzaEdit', params: { slug: pizza.id } }"
+        @click="onChangePizzaButtonClick"
       >
         Изменить
-      </router-link>
+      </a>
     </div>
   </li>
 </template>
 
 <script>
 import AppItemCounter from "@/common/components/ItemCounter";
+import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppCartPizzaItem",
@@ -64,6 +66,12 @@ export default {
     },
     quantity() {
       return this.pizza.quantity;
+    },
+  },
+  methods: {
+    onChangePizzaButtonClick() {
+      this.$store.commit(mutationTypes.fillBuilderData, this.pizza);
+      this.$router.push({ name: "IndexHome" });
     },
   },
 };

@@ -20,7 +20,7 @@
         </div>
       </template>
     </div>
-    <AppCartModal v-show="false" />
+    <AppCartModal v-show="isModalShow" />
   </main>
 </template>
 
@@ -45,15 +45,10 @@ export default {
     AppCartPhoneNumber,
     AppCartNewAddress,
   },
-  // props: {
-  //   modalShow: {
-  //     type: Boolean,
-  //     required: true,
-  //   },
-  // },
   computed: {
     ...mapGetters({
       pizzas: gettersTypes.pizzas,
+      isModalShow: gettersTypes.isModalShow,
     }),
   },
   methods: {
