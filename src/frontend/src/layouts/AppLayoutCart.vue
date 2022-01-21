@@ -16,6 +16,7 @@
 <script>
 import AppLayoutHeader from "@/layouts/AppLayoutHeader";
 import AppLayoutFooter from "@/layouts/AppLayoutFooter";
+import { mutationTypes } from "@/store/mutation_types";
 
 export default {
   name: "AppLayoutCart",
@@ -28,7 +29,7 @@ export default {
   methods: {
     onSubmit() {
       console.log("CREATE ORDER");
-      this.modalShow = true;
+      this.$store.commit(mutationTypes.toggleModalShow, true);
     },
   },
 };

@@ -12,12 +12,14 @@ export const gettersTypes = {
   pizzas: "[cart] Get pizzas",
   totalPrice: "[cart] Get total price: all pizzas + all misc",
   pizzaCount: "[cart] Get pizza count",
+  isModalShow: "[cart] Get isModalShow",
 };
 
 const state = {
   data: null,
   isLoading: false,
   error: null,
+  isModalShow: false,
 };
 
 const getters = {
@@ -30,6 +32,7 @@ const getters = {
       getTotalArrayPrice(state.data.misc)
     );
   },
+  [gettersTypes.isModalShow]: (state) => state.isModalShow,
 };
 
 const mutations = {
@@ -67,6 +70,9 @@ const mutations = {
   },
   [mutationTypes.increasePizzaCount](state) {
     state.data.pizzaCount++;
+  },
+  [mutationTypes.toggleModalShow](state, payload) {
+    state.isModalShow = payload;
   },
 };
 

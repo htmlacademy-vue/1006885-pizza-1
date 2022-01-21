@@ -15,7 +15,9 @@
       <b>Итого: {{ totalPrice }} ₽</b>
     </div>
     <div class="footer__submit">
-      <button type="submit" class="button">Оформить заказ</button>
+      <button type="submit" class="button" :disabled="disabled">
+        Оформить заказ
+      </button>
     </div>
   </section>
 </template>
@@ -29,7 +31,11 @@ export default {
   computed: {
     ...mapGetters({
       totalPrice: gettersTypes.totalPrice,
+      pizzas: gettersTypes.pizzas,
     }),
+    disabled() {
+      return this.pizzas.length === 0;
+    },
   },
 };
 </script>
